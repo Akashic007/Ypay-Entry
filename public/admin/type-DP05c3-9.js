@@ -1,0 +1,1 @@
+const t={id:"ID",pay_type:"支付类型",paytypetable__name:"类型名称",type:"通道类型",name:"通道名称",config:"通道配置",extend:"扩展内容",remark:"备注",status:"状态","status 0":"禁用","status 1":"启用","quick Search Fields":"ID"};export{t as default};

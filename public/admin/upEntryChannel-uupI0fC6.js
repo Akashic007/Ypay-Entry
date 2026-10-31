@@ -1,0 +1,1 @@
+const e={id:"ID",up_id:"上游ID",up__name:"上游名称",channel_id:"上游进件通道ID",service_name:"服务商名称",platform_code:"平台代码",price:"进件价格",order_rate:"订单费率",status:"状态","status 0":"禁用","status 1":"启用",remark:"备注",create_time:"创建时间",update_time:"修改时间","quick Search Fields":"ID"};export{e as default};

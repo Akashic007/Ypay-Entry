@@ -1,0 +1,1 @@
+const e={id:"ID",name:"套餐名称",code:"套餐标识码",status:"状态","status 0":"禁用","status 1":"启用",price:"套餐价格",rebate_ratio:"预存返利",entry_discount:"进件则扣",remark:"备注",create_time:"创建时间","quick Search Fields":"ID"};export{e as default};

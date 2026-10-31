@@ -1,0 +1,1 @@
+const e={"Please enter an account":"Please enter your account","Please input a password":"Please enter your password","Hold session":"Keep the session","Sign in":"Sign in","TOTP Verification":"TOTP Verification","Please enter TOTP code":"Please enter your TOTP code","TOTP code":"TOTP Code","TOTP code must be 6 digits":"TOTP code must be 6 digits"};export{e as default};

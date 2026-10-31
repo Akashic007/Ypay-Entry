@@ -1,0 +1,1 @@
+const t={id:"ID",user_id:"用户ID",user__username:"用户名",type:"字符串",uid:"平台身份标识",content:"登录信息",login_ip:"登录IP",create_time:"创建时间",status:"状态","status 0":"失败","status 1":"成功","quick Search Fields":"ID"};export{t as default};

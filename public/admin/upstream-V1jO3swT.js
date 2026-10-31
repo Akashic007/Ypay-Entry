@@ -1,0 +1,1 @@
+const e={id:"id",channel_id:"channel_id",channel__name:"name",up_id:"up_id",up_channel_id:"up_channel_id",service_name:"service_name",config:"config",sync_time:"sync_time","quick Search Fields":"id"};export{e as default};

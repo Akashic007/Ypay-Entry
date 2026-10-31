@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com/3.3.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{$site_ico}" />
+     <link rel="stylesheet" href="/views/home-template/Home_One/css/footer.css" />
+         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-ui@2.15.13/lib/theme-chalk/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/element-ui@2.15.13/lib/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <title>{$site_name}-{$site_title}</title>
+    <!-- Tailwind 配置 -->
+    <script>
+        // 滚动监听实现section的active类切换
+        window.addEventListener('scroll', function () {
+            const sections = document.querySelectorAll('.section');
+            const pageAnchors = document.querySelectorAll('.page-anchors a');
+
+            let currentActiveSection = null;
+
+            // 检测每个section是否在视口中
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                const scrollPosition = window.pageYOffset + window.innerHeight / 2;
+
+                // 当section的一半进入视口时，将其设为当前活跃section
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    currentActiveSection = section;
+                }
+            });
+
+            // 更新section的active类
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            if (currentActiveSection) {
+                currentActiveSection.classList.add('active');
+
+                // 更新导航锚点的active类
+                const sectionId = currentActiveSection.getAttribute('id');
+                pageAnchors.forEach(anchor => {
+                    anchor.classList.remove('active');
+                    if (anchor.getAttribute('href') === `#${sectionId}`) {
+                        anchor.classList.add('active');
+                    }
+                });
+            }
+        });
+
+        // 页面加载时初始化
+        window.addEventListener('load', function () {
+            window.dispatchEvent(new Event('scroll'));
+        });
+    </script>
+
+</head>
+
+<body>
+    <div class="frontend">
+        <div>
+            <div class="header">
+                <div class="header-container">
+                    <div class="logo">{$site_name}</div>
+                    <div class="menu-toggle"><i class="el-icon-menu"></i></div>
+                    <div class="action">
+                        <!-- <div class="action-item">
+                           <div><a href="/" aria-current="page"
+                                   class="router-link-exact-active router-link-active">首页</a></div>
+                        </div>
+                        <div class="action-item">
+                           <div><a  class="">开发文档</a></div>
+                        </div>
+                        <div class="action-item">
+                           <div><a href="#" class="">支付测试</a></div>
+                        </div> -->
+
+                        {foreach $home_menu as $key=>$val }
+							<div class="action-item">
+                           <div><a href="{$val.value}" class="">{$val.key}</a></div>
+                        </div>
+							{/foreach}
+                        <div class="action-item"><a href="/login"  style="display: flex;justify-content: center;align-items: center;" type="button" class="el-button w-25 h-9 el-button--default"><i
+                                    class="el-icon-user"></i><span>登录</span></a></adiv>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="frontend-index">
+                <div class="page-anchors"><a href="#home" class="active"><span>首页</span></a><a href="#features"
+                        class=""><span>产品特色</span></a><a href="#advantages" class=""><span>核心优势</span></a><a
+                        href="#cases" class=""><span>成功案例</span></a></div>
+                <div id="home" class="section active">
+                    <div class="hero-section" activesection="home">
+                        <div class="hero-banner">
+                            <div class="hero-background">
+                                <div class="bg-gradient"></div>
+                                <div class="bg-pattern"></div>
+                                <div class="floating-elements">
+                                    <div class="element element-1"></div>
+                                    <div class="element element-2"></div>
+                                    <div class="element element-3"></div>
+                                    <div class="element element-4"></div>
+                                </div>
+                            </div>
+                            <div class="hero-container">
+                                <div class="hero-content">
+                                    <div class="content-left">
+                                        <div class="brand-showcase">
+                                            <div class="brand-badge"><i class="el-icon-star-on"></i><span>企业级支付平台</span>
+                                            </div>
+                                            <h1 class="hero-title"><span class="title-main">专业可靠的</span><span
+                                                    class="title-highlight">{$site_title}解决方案</span></h1>
+                                            <p class="hero-subtitle"> 为企业和个人开发者提供安全、高效、便捷的支付接入服务
+                                                <br>无需复杂资质，快速集成，专业团队7×24小时技术支持
+                                            </p>
+                                            <div class="value-props">
+                                                <div class="prop-item"><i class="el-icon-shield"></i><span>银行级安全</span>
+                                                </div>
+                                                <div class="prop-item"><i class="el-icon-timer"></i><span>秒级到账</span>
+                                                </div>
+                                                <div class="prop-item"><i class="el-icon-service"></i><span>专业服务</span>
+                                                </div>
+                                            </div>
+                                            <div class="cta-section"><button type="button"
+                                                    class="el-button primary-cta el-button--primary el-button--large"><span><i
+                                                            class="el-icon-right"></i> 立即接入
+                                                    </span></button></div>
+                                        </div>
+                                    </div>
+                                    <div class="content-right">
+                                        <div class="hero-visual">
+                                            <div class="dashboard-preview">
+                                                <div class="dashboard-header">
+                                                    <div class="header-dots"><span class="dot red"></span><span
+                                                            class="dot yellow"></span><span class="dot green"></span>
+                                                    </div>
+                                                    <div class="header-title">{$site_title}控制台</div>
+                                                </div>
+                                                <div class="dashboard-content">
+                                                    <div class="stats-row">
+                                                        <div class="stat-card">
+                                                            <div class="stat-value">¥2,847,392</div>
+                                                            <div class="stat-label">今日交易额</div>
+                                                            <div class="stat-trend up">+12.5%</div>
+                                                        </div>
+                                                        <div class="stat-card">
+                                                            <div class="stat-value">15,847</div>
+                                                            <div class="stat-label">交易笔数</div>
+                                                            <div class="stat-trend up">+8.3%</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="chart-area">
+                                                        <div class="chart-placeholder">
+                                                            <div class="chart-bars">
+                                                                <div class="bar" style="height: 60%;"></div>
+                                                                <div class="bar" style="height: 80%;"></div>
+                                                                <div class="bar" style="height: 45%;"></div>
+                                                                <div class="bar" style="height: 90%;"></div>
+                                                                <div class="bar" style="height: 70%;"></div>
+                                                                <div class="bar" style="height: 85%;"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="floating-icons">
+                                                <div class="icon-item icon-1"><i class="el-icon-mobile-phone"></i></div>
+                                                <div class="icon-item icon-2"><i class="el-icon-bank-card"></i></div>
+                                                <div class="icon-item icon-3"><i class="el-icon-money"></i></div>
+                                                <div class="icon-item icon-4"><i class="el-icon-cpu"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="scroll-indicator"><span class="scroll-text">了解更多</span>
+                                <div class="scroll-arrow"><i class="el-icon-arrow-down"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="features" class="section">
+                    <div id="features" class="feature-cards-section">
+                        <div class="container">
+                            <div class="section-header">
+                                <div class="section-badge"><i class="el-icon-star-on"></i><span>核心功能</span></div>
+                                <h2 class="section-title">一站式支付解决方案</h2>
+                                <p class="section-subtitle"> 为不同规模的企业和开发者提供完整的支付服务体系 </p>
+                            </div>
+                            <div class="cards-grid">
+                                <div class="feature-card featured" style="animation-delay: 0s;">
+                                    <div class="card-header">
+                                        <div class="card-icon"
+                                            style="background: linear-gradient(135deg, rgba(0, 110, 255, 0.1) 0%, rgba(0, 110, 255, 0.05) 100%);">
+                                            <i class="el-icon-bank-card" style="color: rgb(0, 110, 255);"></i>
+                                        </div>
+                                        <div class="card-badge"> 热门 </div>
+                                    </div>
+                                    <div class="card-content">
+                                        <h3 class="card-title">支付网关</h3>
+                                        <p class="card-description">支持微信、支付宝、银联等主流支付方式，提供统一的支付接口</p>
+                                        <div class="card-features">
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>多渠道支付接入</span>
+                                            </div>
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>实时到账结算</span>
+                                            </div>
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>安全加密传输</span>
+                                            </div>
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>7×24小时监控</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="card-stats">
+                                            <div class="stat-item"><span class="stat-value">99.9%</span><spana
+                                                    class="stat-label">成功率</span></div>
+                                        </div>
+                                        <div class="card-action"><a href="/login" class="action-text">立即接入</a><i
+                                                class="el-icon-arrow-right"></i></div>
+                                    </div>
+                                    <div class="card-decoration">
+                                        <div class="decoration-circle"></div>
+                                        <div class="decoration-line"></div>
+                                    </div>
+                                </div>
+                                <div class="feature-card" style="animation-delay: 0.1s;">
+                                    <div class="card-header">
+                                        <div class="card-icon"
+                                            style="background: linear-gradient(135deg, rgba(82, 196, 26, 0.1) 0%, rgba(82, 196, 26, 0.05) 100%);">
+                                            <i class="el-icon-document" style="color: rgb(82, 196, 26);"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card-content">
+                                        <h3 class="card-title">API文档</h3>
+                                        <p class="card-description">完整的开发文档和SDK，支持多种编程语言，快速集成支付功能</p>
+                                        <div class="card-features">
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>RESTful
+                                                    API设计</span></div>
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>多语言SDK支持</span>
+                                            </div>
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>在线调试工具</span>
+                                            </div>
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>代码示例丰富</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="card-stats">
+                                            <div class="stat-item"><span class="stat-value">10+</span><span
+                                                    class="stat-label">编程语言</span></div>
+                                        </div>
+                                        <div class="card-action"><span class="action-text">查看文档</span><i
+                                                class="el-icon-arrow-right"></i></div>
+                                    </div>
+                                    <div class="card-decoration">
+                                        <div class="decoration-circle"></div>
+                                        <div class="decoration-line"></div>
+                                    </div>
+                                </div>
+                                <div class="feature-card" style="animation-delay: 0.2s;">
+                                    <div class="card-header">
+                                        <div class="card-icon"
+                                            style="background: linear-gradient(135deg, rgba(114, 46, 209, 0.1) 0%, rgba(114, 46, 209, 0.05) 100%);">
+                                            <i class="el-icon-data-analysis" style="color: rgb(114, 46, 209);"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card-content">
+                                        <h3 class="card-title">数据看板</h3>
+                                        <p class="card-description">实时交易数据统计，多维度分析报表，助力业务决策优化</p>
+                                        <div class="card-features">
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>实时数据监控</span>
+                                            </div>
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>多维度报表</span>
+                                            </div>
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>自定义图表</span>
+                                            </div>
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>数据导出功能</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="card-stats">
+                                            <div class="stat-item"><span class="stat-value">实时</span><span
+                                                    class="stat-label">数据更新</span></div>
+                                        </div>
+                                        <div class="card-action"><span class="action-text">查看演示</span><i
+                                                class="el-icon-arrow-right"></i></div>
+                                    </div>
+                                    <div class="card-decoration">
+                                        <div class="decoration-circle"></div>
+                                        <div class="decoration-line"></div>
+                                    </div>
+                                </div>
+                                <div class="feature-card" style="animation-delay: 0.3s;">
+                                    <div class="card-header">
+                                        <div class="card-icon"
+                                            style="background: linear-gradient(135deg, rgba(250, 140, 22, 0.1) 0%, rgba(250, 140, 22, 0.05) 100%);">
+                                            <i class="el-icon-lock" style="color: rgb(250, 140, 22);"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card-content">
+                                        <h3 class="card-title">安全防护</h3>
+                                        <p class="card-description">银行级安全标准，多重风控策略，保障资金和数据安全</p>
+                                        <div class="card-features">
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>SSL加密传输</span>
+                                            </div>
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>实名认证验证</span>
+                                            </div>
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>风险监控预警</span>
+                                            </div>
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>合规资质认证</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="card-stats">
+                                            <div class="stat-item"><span class="stat-value">银行级</span><span
+                                                    class="stat-label">安全标准</span></div>
+                                        </div>
+                                        <div class="card-action"><span class="action-text">了解更多</span><i
+                                                class="el-icon-arrow-right"></i></div>
+                                    </div>
+                                    <div class="card-decoration">
+                                        <div class="decoration-circle"></div>
+                                        <div class="decoration-line"></div>
+                                    </div>
+                                </div>
+                                <div class="feature-card" style="animation-delay: 0.4s;">
+                                    <div class="card-header">
+                                        <div class="card-icon"
+                                            style="background: linear-gradient(135deg, rgba(235, 47, 150, 0.1) 0%, rgba(235, 47, 150, 0.05) 100%);">
+                                            <i class="el-icon-user" style="color: rgb(235, 47, 150);"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card-content">
+                                        <h3 class="card-title">商户中心</h3>
+                                        <p class="card-description">完善的商户管理系统，账户管理、订单查询、财务对账一站搞定</p>
+                                        <div class="card-features">
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>账户余额管理</span>
+                                            </div>
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>交易记录查询</span>
+                                            </div>
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>自动对账功能</span>
+                                            </div>
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>提现结算服务</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="card-stats">
+                                            <div class="stat-item"><span class="stat-value">24h</span><span
+                                                    class="stat-label">客服支持</span></div>
+                                        </div>
+                                        <div class="card-action"><span class="action-text">进入中心</span><i
+                                                class="el-icon-arrow-right"></i></div>
+                                    </div>
+                                    <div class="card-decoration">
+                                        <div class="decoration-circle"></div>
+                                        <div class="decoration-line"></div>
+                                    </div>
+                                </div>
+                                <div class="feature-card" style="animation-delay: 0.5s;">
+                                    <div class="card-header">
+                                        <div class="card-icon"
+                                            style="background: linear-gradient(135deg, rgba(19, 194, 194, 0.1) 0%, rgba(19, 194, 194, 0.05) 100%);">
+                                            <i class="el-icon-message" style="color: rgb(19, 194, 194);"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card-content">
+                                        <h3 class="card-title">消息通知</h3>
+                                        <p class="card-description">可靠的异步通知机制，确保交易状态及时同步，业务流程无缝对接</p>
+                                        <div class="card-features">
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>异步消息推送</span>
+                                            </div>
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>重试机制保障</span>
+                                            </div>
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>签名验证安全</span>
+                                            </div>
+                                            <div class="feature-item"><i class="el-icon-check"></i><span>多种通知方式</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="card-stats">
+                                            <div class="stat-item"><span class="stat-value">99.99%</span><span
+                                                    class="stat-label">送达率</span></div>
+                                        </div>
+                                        <div class="card-action"><span class="action-text">配置通知</span><i
+                                                class="el-icon-arrow-right"></i></div>
+                                    </div>
+                                    <div class="card-decoration">
+                                        <div class="decoration-circle"></div>
+                                        <div class="decoration-lsine"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="section-cta"><a href="/login" type="button"
+                                    class="el-button cta-button el-button--primary el-button--large"><span><i
+                                            class="el-icon-rocket"></i> 立即开始接入 </span></a>
+                                <p class="cta-note"><i class="el-icon-info"></i>
+                                    免费试用，无需信用卡，5分钟快速集成 </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="advantages" class="section">
+                    <div class="product-advantages-section">
+                        <div class="container">
+                            <div class="advantages-section">
+                                <div class="section-header">
+                                    <div class="section-badge"><i class="el-icon-trophy"></i><span>产品优势</span></div>
+                                    <h2 class="section-title">为什么选择我们</h2>
+                                    <p class="section-subtitle"> 专业的技术团队，成熟的产品体系，为您提供最可靠的支付解决方案 </p>
+                                </div>
+                                <div class="advantages-grid">
+                                    <div data-advantage="security" class="advantage-card" style="animation-delay: 0s;">
+                                        <div class="card-background">
+                                            <div class="bg-pattern"
+                                                style="background: radial-gradient(circle at 80% 20%, rgba(0, 110, 255, 0.03) 0%, transparent 50%);">
+                                            </div>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="advantage-icon"
+                                                style="background: linear-gradient(135deg, rgba(0, 110, 255, 0.1) 0%, rgba(0, 110, 255, 0.05) 100%);">
+                                                <i class="el-icon-lock" style="color: rgb(0, 110, 255);"></i>
+                                            </div>
+                                            <h3 class="advantage-title">银行级安全</h3>
+                                            <p class="advantage-description">
+                                                采用金融级安全标准，多重加密保护，确保每一笔交易的安全可靠</p>
+                                            <div class="advantage-features">
+                                                <div class="feature-item"><i
+                                                        class="el-icon-check"></i><span>SSL/TLS加密传输</span></div>
+                                                <div class="feature-item"><i
+                                                        class="el-icon-check"></i><span>多重身份验证</span>
+                                                </div>
+                                                <div class="feature-item"><i
+                                                        class="el-icon-check"></i><span>实时风险监控</span>
+                                                </div>
+                                                <div class="feature-item"><i class="el-icon-check"></i><span>PCI
+                                                        DSS认证</span></div>
+                                            </div>
+                                            <div class="advantage-stats">
+                                                <div class="stat-item">
+                                                    <div class="stat-value" style="color: rgb(0, 110, 255);"> 99.99%
+                                                    </div>
+                                                    <div class="stat-label">安全保障</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-decoration">
+                                            <div class="decoration-element" style="background: rgb(0, 110, 255);"></div>
+                                        </div>
+                                    </div>
+                                    <div data-advantage="stability" class="advantage-card"
+                                        style="animation-delay: 0.2s;">
+                                        <div class="card-background">
+                                            <div class="bg-pattern"
+                                                style="background: radial-gradient(circle at 20% 80%, rgba(82, 196, 26, 0.03) 0%, transparent 50%);">
+                                            </div>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="advantage-icon"
+                                                style="background: linear-gradient(135deg, rgba(82, 196, 26, 0.1) 0%, rgba(82, 196, 26, 0.05) 100%);">
+                                                <i class="el-icon-cpu" style="color: rgb(82, 196, 26);"></i>
+                                            </div>
+                                            <h3 class="advantage-title">高可用性</h3>
+                                            <p class="advantage-description">
+                                                7×24小时不间断服务，99.9%的系统可用性，保障您的业务持续运行</p>
+                                            <div class="advantage-features">
+                                                <div class="feature-item"><i
+                                                        class="el-icon-check"></i><span>分布式架构</span>
+                                                </div>
+                                                <div class="feature-item"><i
+                                                        class="el-icon-check"></i><span>自动故障切换</span>
+                                                </div>
+                                                <div class="feature-item"><i class="el-icon-check"></i><span>负载均衡</span>
+                                                </div>
+                                                <div class="feature-item"><i
+                                                        class="el-icon-check"></i><span>实时监控告警</span>
+                                                </div>
+                                            </div>
+                                            <div class="advantage-stats">
+                                                <div class="stat-item">
+                                                    <div class="stat-value" style="color: rgb(82, 196, 26);"> 99.9%
+                                                    </div>
+                                                    <div class="stat-label">系统可用性</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-decoration">
+                                            <div class="decoration-element" style="background: rgb(82, 196, 26);"></div>
+                                        </div>
+                                    </div>
+                                    <div data-advantage="speed" class="advantage-card" style="animation-delay: 0.4s;">
+                                        <div class="card-background">
+                                            <div class="bg-pattern"
+                                                style="background: radial-gradient(circle, rgba(114, 46, 209, 0.03) 0%, transparent 50%);">
+                                            </div>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="advantage-icon"
+                                                style="background: linear-gradient(135deg, rgba(114, 46, 209, 0.1) 0%, rgba(114, 46, 209, 0.05) 100%);">
+                                                <i class="el-icon-timer" style="color: rgb(114, 46, 209);"></i>
+                                            </div>
+                                            <h3 class="advantage-title">极速响应</h3>
+                                            <p class="advantage-description">
+                                                毫秒级响应速度，秒级到账结算，为用户提供极致的支付体验</p>
+                                            <div class="advantage-features">
+                                                <div class="feature-item"><i
+                                                        class="el-icon-check"></i><span>毫秒级响应</span>
+                                                </div>
+                                                <div class="feature-item"><i class="el-icon-check"></i><span>秒级到账</span>
+                                                </div>
+                                                <div class="feature-item"><i class="el-icon-check"></i><span>智能路由</span>
+                                                </div>
+                                                <div class="feature-item"><i class="el-icon-check"></i><span>缓存优化</span>
+                                                </div>
+                                            </div>
+                                            <div class="advantage-stats">
+                                                <div class="stat-item">
+                                                    <div class="stat-value" style="color: rgb(114, 46, 209);"> &lt;100ms
+                                                    </div>
+                                                    <div class="stat-label">响应时间</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-decoration">
+                                            <div class="decoration-element" style="background: rgb(114, 46, 209);">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div data-advantage="integration" class="advantage-card"
+                                        style="animation-delay: 0.6s;">
+                                        <div class="card-background">
+                                            <div class="bg-pattern"
+                                                style="background: radial-gradient(circle at 70% 30%, rgba(250, 140, 22, 0.03) 0%, transparent 50%);">
+                                            </div>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="advantage-icon"
+                                                style="background: linear-gradient(135deg, rgba(250, 140, 22, 0.1) 0%, rgba(250, 140, 22, 0.05) 100%);">
+                                                <i class="el-icon-connection" style="color: rgb(250, 140, 22);"></i>
+                                            </div>
+                                            <h3 class="advantage-title">简单集成</h3>
+                                            <p class="advantage-description">
+                                                提供完整的SDK和API文档，5分钟快速集成，降低开发成本</p>
+                                            <div class="advantage-features">
+                                                <div class="feature-item"><i class="el-icon-check"></i><span>RESTful
+                                                        API</span></div>
+                                                <div class="feature-item"><i
+                                                        class="el-icon-check"></i><span>多语言SDK</span>
+                                                </div>
+                                                <div class="feature-item"><i class="el-icon-check"></i><span>详细文档</span>
+                                                </div>
+                                                <div class="feature-item"><i class="el-icon-check"></i><span>在线调试</span>
+                                                </div>
+                                            </div>
+                                            <div class="advantage-stats">
+                                                <div class="stat-item">
+                                                    <div class="stat-value" style="color: rgb(250, 140, 22);"> 5分钟
+                                                    </div>
+                                                    <div class="stat-label">快速集成</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-decoration">
+                                            <div class="decoration-element" style="background: rgb(250, 140, 22);">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="testimonials-section">
+                                <div class="section-header">
+                                    <div class="section-badge"><i class="el-icon-user"></i><span>客户案例</span></div>
+                                    <h2 class="section-title">客户的信任与认可</h2>
+                                    <p class="section-subtitle"> 已为数千家企业提供专业的支付服务，获得客户一致好评 </p>
+                                </div>
+                                <div class="testimonials-grid">
+                                    <div data-testimonial="testimonial-1" class="testimonial-card"
+                                        style="animation-delay: 0s;">
+                                        <div class="testimonial-content">
+                                            <div class="quote-icon"><i class="el-icon-chat-dot-round"></i></div>
+                                            <p class="testimonial-text">
+                                                {$site_title}的接入非常简单，技术支持也很到位。我们的支付成功率提升了15%，用户体验得到了显著改善。</p>
+                                        </div>
+                                        <div class="testimonial-author">
+                                            <div class="author-avatar"
+                                                style="background: linear-gradient(135deg, rgb(0, 110, 255) 0%, rgb(64, 169, 255) 100%);">
+                                                <span>张</span>
+                                            </div>
+                                            <div class="author-info">
+                                                <div class="author-name">张总</div>
+                                                <div class="author-title">技术总监</div>
+                                                <div class="company-name">某知名电商平台</div>
+                                            </div>
+                                            <div class="company-logo"><i class="el-icon-shopping-cart-2"
+                                                    style="color: rgb(0, 110, 255);"></i></div>
+                                        </div>
+                                        <div class="testimonial-stats">
+                                            <div class="stat-item"><span class="stat-value">500万+</span><span
+                                                    class="stat-label">月交易量</span></div>
+                                            <div class="stat-item"><span class="stat-value">+35%</span><span
+                                                    class="stat-label">业务增长</span></div>
+                                        </div>
+                                    </div>
+                                    <div data-testimonial="testimonial-2" class="testimonial-card"
+                                        style="animation-delay: 0.15s;">
+                                        <div class="testimonial-content">
+                                            <div class="quote-icon"><i class="el-icon-chat-dot-round"></i></div>
+                                            <p class="testimonial-text">
+                                                作为一家初创公司，我们需要快速上线支付功能。{$site_title}帮助我们在一天内完成了集成，非常高效。</p>
+                                        </div>
+                                        <div class="testimonial-author">
+                                            <div class="author-avatar"
+                                                style="background: linear-gradient(135deg, rgb(82, 196, 26) 0%, rgb(115, 209, 61) 100%);">
+                                                <span>李</span>
+                                            </div>
+                                            <div class="author-info">
+                                                <div class="author-name">李经理</div>
+                                                <div class="author-title">产品经理</div>
+                                                <div class="company-name">某互联网金融公司</div>
+                                            </div>
+                                            <div class="company-logo"><i class="el-icon-coin"
+                                                    style="color: rgb(82, 196, 26);"></i></div>
+                                        </div>
+                                        <div class="testimonial-stats">
+                                            <div class="stat-item"><span class="stat-value">100万+</span><span
+                                                    class="stat-label">月交易量</span></div>
+                                            <div class="stat-item"><span class="stat-value">+120%</span><span
+                                                    class="stat-label">业务增长</span></div>
+                                        </div>
+                                    </div>
+                                    <div data-testimonial="testimonial-3" class="testimonial-card"
+                                        style="animation-delay: 0.3s;">
+                                        <div class="testimonial-content">
+                                            <div class="quote-icon"><i class="el-icon-chat-dot-round"></i></div>
+                                            <p class="testimonial-text">
+                                                {$site_title}的安全性让我们很放心，从未出现过安全问题。客服响应也很及时，合作很愉快。</p>
+                                        </div>
+                                        <div class="testimonial-author">
+                                            <div class="author-avatar"
+                                                style="background: linear-gradient(135deg, rgb(114, 46, 209) 0%, rgb(179, 127, 235) 100%);">
+                                                <span>王</span>
+                                            </div>
+                                            <div class="author-info">
+                                                <div class="author-name">王总</div>
+                                                <div class="author-title">CEO</div>
+                                                <div class="company-name">某教育科技公司</div>
+                                            </div>
+                                            <div class="company-logo"><i class="el-icon-reading"
+                                                    style="color: rgb(114, 46, 209);"></i></div>
+                                        </div>
+                                        <div class="testimonial-stats">
+                                            <div class="stat-item"><span class="stat-value">200万+</span><span
+                                                    class="stat-label">月交易量</span></div>
+                                            <div class="stat-item"><span class="stat-value">+80%</span><span
+                                                    class="stat-label">业务增长</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="partners-section">
+                                <div class="section-header">
+                                    <h3 class="partners-title">合作伙伴</h3>
+                                    <p class="partners-subtitle">与行业领先企业建立深度合作关系</p>
+                                </div>
+                                <div class="partners-grid">
+                                    <div data-partner="wechat" class="partner-item" style="animation-delay: 0s;">
+                                        <div class="partner-logo"><img src="/views/home-template/Home_One/static/wechat.png" alt="微信支付">
+                                        </div>
+                                        <div class="partner-name">微信支付</div>
+                                    </div>
+                                    <div data-partner="alipay" class="partner-item" style="animation-delay: 0.1s;">
+                                        <div class="partner-logo"><img src="/views/home-template/Home_One/static/alipay.png" alt="支付宝">
+                                        </div>
+                                        <div class="partner-name">支付宝</div>
+                                    </div>
+                                    <div data-partner="unionpay" class="partner-item" style="animation-delay: 0.2s;">
+                                        <div class="partner-logo"><img src="/views/home-template/Home_One/static/union.png" alt="银联支付">
+                                        </div>
+                                        <div class="partner-name">银联支付</div>
+                                    </div>
+                                    <div data-partner="qq" class="partner-item" style="animation-delay: 0.3s;">
+                                        <div class="partner-logo"><img src="/views/home-template/Home_One/static/qq.png" alt="QQ钱包"></div>
+                                        <div class="partner-name">QQ钱包</div>
+                                    </div>
+                                    <div data-partner="jd" class="partner-item" style="animation-delay: 0.4s;">
+                                        <div class="partner-logo"><img src="/views/home-template/Home_One/static/jd.png" alt="京东支付"></div>
+                                        <div class="partner-name">京东支付</div>
+                                    </div>
+                                    <div data-partner="paypal" class="partner-item" style="animation-delay: 0.5s;">
+                                        <div class="partner-logo"><img src="/views/home-template/Home_One/static/paypal.png" alt="PayPal">
+                                        </div>
+                                        <div class="partner-name">PayPal</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="cases" class="section">
+                    <div class="cta-section">
+                        <div class="container">
+                            <div class="main-cta">
+
+                                <div class="cta-content">
+                                    <div class="cta-header">
+                                        <div class="cta-badge"><i class="el-icon-star-on"></i><span>立即开始</span></div>
+                                        <h2 class="cta-title"><span class="title-main">准备好开始了吗？</span><span
+                                                class="title-highlight">5分钟快速接入支付服务</span></h2>
+                                        <p class="cta-subtitle"> 无需复杂配置，无需等待审核，立即注册即可开始使用 <br>专业技术团队7×24小时为您提供支持服务 </p>
+                                    </div>
+                                    <div class="cta-actions"><a href="/register" style="display: flex;justify-content: center;align-items: center;" type="button"
+                                            class="el-button primary-action el-button--primary el-button--large"><span>免费注册
+                                            </span></a><a href="/login"  style="display: flex;justify-content: center;align-items: center;" type="button"
+                                            class="el-button secondary-action el-button--default el-button--large"><span><i
+                                                    class="el-icon-video-play"></i> 在线演示
+                                            </span></a></div>
+                                    <div class="cta-features">
+                                        <div class="feature-item"><i class="el-icon-check"></i><span>免费试用</span></div>
+                                        <div class="feature-item"><i class="el-icon-check"></i><span>无需信用卡</span></div>
+                                        <div class="feature-item"><i class="el-icon-check"></i><span>5分钟集成</span></div>
+                                        <div class="feature-item"><i class="el-icon-check"></i><span>专业支持</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="contact-section">
+                            <div class="container">
+                                 <div class="contact-grid">
+                                    <div class="contact-item">
+                                        <div class="contact-icon"><i class="el-icon-service"></i></div>
+                                        <div class="contact-info">
+                                            <h4 class="contact-title">技术支持</h4>
+                                            <p class="contact-desc">7×24小时在线技术支持</p>
+                                            <div class="contact-action"><button type="button"
+                                                    class="el-button el-button--text"><span>
+                                                        联系技术支持 <i class="el-icon-arrow-right"></i></span></button></div>
+                                        </div>
+                                    </div>
+                                    <div class="contact-item">
+                                        <div class="contact-icon"><i class="el-icon-phone"></i></div>
+                                        <div class="contact-info">
+                                            <h4 class="contact-title">商务合作</h4>
+                                            <p class="contact-desc">专业的商务团队为您服务</p>
+                                            <div class="contact-action"><button type="button"
+                                                    class="el-button el-button--text"><span>
+                                                        商务咨询 <i class="el-icon-arrow-right"></i></span></button></div>
+                                        </div>
+                                    </div>
+                                    <div class="contact-item">
+                                        <div class="contact-icon"><i class="el-icon-document"></i></div>
+                                        <div class="contact-info">
+                                            <h4 class="contact-title">开发文档</h4>
+                                            <p class="contact-desc">完整的API文档和SDK</p>
+                                            <div class="contact-action"><button type="button"
+                                                    class="el-button el-button--text"><span>
+                                                        查看文档 <i class="el-icon-arrow-right"></i></span></button></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                               
+                            </div>
+                        <footer class="site-footer">
+                            <div class="container">
+                                <div class="footer-content">
+                                    <div class="footer-main">
+                                        <div class="footer-brand">
+                                            <div class="brand-logo">
+                                                <div class="logo-icon"><i class="el-icon-money"></i></div><span
+                                                    class="brand-name">{$site_title}</span>
+                                            </div>
+                                            <p class="brand-desc">
+                                                专业可靠的支付解决方案提供商，为企业和开发者提供安全、高效、便捷的支付接入服务。 </p>
+                                            <div class="social-links"><a href="#" class="social-link"><i
+                                                        class="el-icon-chat-dot-round"></i></a><a href="#"
+                                                    class="social-link"><i class="el-icon-message"></i></a><a href="#"
+                                                    class="social-link"><i class="el-icon-phone"></i></a></div>
+                                        </div>
+                                   
+                                    </div>
+                                    <div class="footer-bottom">
+                                        <div class="copyright">
+                                           {$footer_content|raw}
+                                        </div>
+                                        <div class="footer-meta">
+                                            <span>{$record_number}</span><span>|</span><span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+    </div>
+</body>
+
+</html>

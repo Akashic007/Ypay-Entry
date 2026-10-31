@@ -1,0 +1,1 @@
+const e={id:"ID",user_id:"用户ID",user__username:"用户名",name:"通道名称",pay_type:"支付类型","pay_type wxpay":"微信支付","pay_type alipay":"支付宝","pay_type qqpay":"QQ支付",type_id:"类型ID",type__name:"名称",type__code:"通道类型代码",config:"通道配置",remark:"备注",status:"状态","status 0":"禁用","status 1":"启用",create_time:"创建时间",update_time:"修改时间","quick Search Fields":"ID"};export{e as default};

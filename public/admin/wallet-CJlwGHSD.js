@@ -1,0 +1,1 @@
+const e={id:"ID",user_id:"用户",user__username:"用户名",money:"总余额",withdrawal_money:"可提现余额",freeze_money:"冻结余额",total_income:"累计收入",total_withdraw:"累计提现","quick Search Fields":"ID",freeze:"冻结余额",unfreeze:"解冻余额",transfer:"转入消费余额",adjust:"余额调整"};export{e as default};

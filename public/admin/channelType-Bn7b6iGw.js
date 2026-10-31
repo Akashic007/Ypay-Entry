@@ -1,0 +1,1 @@
+const a={id:"id",pay_method:"pay_method","pay_method wxpay":"pay_method wxpay","pay_method alipay":"pay_method alipay","pay_method qqpay":"pay_method qqpay",name:"name",code:"code","quick Search Fields":"id"};export{a as default};

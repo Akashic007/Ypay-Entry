@@ -1,0 +1,1 @@
+const a={id:"id",name:"name",api:"api",api_id:"api_id",api_key:"api_key",rejected:"rejected",remark:"remark",api_status:"api_status",status:"status","status 0":"status 0","status 1":"status 1","quick Search Fields":"id"};export{a as default};

@@ -1,0 +1,1 @@
+const e={id:"ID",event:"通知事件",notify_type:"通知类型",driver:"通知驱动",target:"发送目标",biz_id:"业务ID",biz_type:"业务类型",title:"标题",content:"通知内容",status:"状态",error_msg:"错误消息",response:"回调内容",create_time:"创建时间",update_time:"修改时间",send_time:"发送时间","quick Search Fields":"ID"};export{e as default};

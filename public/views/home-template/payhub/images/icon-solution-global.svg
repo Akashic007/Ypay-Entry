@@ -1,0 +1,21 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradGlobal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#60A5FA"/>
+      <stop offset="50%" style="stop-color:#3B82F6"/>
+      <stop offset="100%" style="stop-color:#2563EB"/>
+    </linearGradient>
+    <filter id="shadowGlobal" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#3B82F6" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <ellipse cx="40" cy="70" rx="26" ry="7" fill="#BFDBFE" opacity="0.6"/>
+  <circle cx="40" cy="40" r="22" fill="url(#gradGlobal)" filter="url(#shadowGlobal)"/>
+  <ellipse cx="40" cy="40" rx="10" ry="22" stroke="white" stroke-width="2.5" fill="none"/>
+  <line x1="18" y1="40" x2="62" y2="40" stroke="white" stroke-width="2.5"/>
+  <path d="M24 28C30 34 38 34 40 34" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <path d="M24 52C30 46 38 46 40 46" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <circle cx="60" cy="58" r="11" fill="#1D4ED8"/>
+  <path d="M60 53V63" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M55 58H65" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

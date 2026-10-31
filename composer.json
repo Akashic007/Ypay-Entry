@@ -1,0 +1,67 @@
+{
+	"name": "y-pay-plus/entry",
+	"description": "支付进件",
+	"type": "project",
+	"keywords": [
+		"build-admin",
+		"thinkphp",
+		"ypay"
+	],
+	"license": "Apache-2.0",
+	"require": {
+		"php": ">=8.0.2",
+		"topthink/framework": "8.1.1",
+		"topthink/think-orm": "3.0.33",
+		"topthink/think-multi-app": "1.1.1",
+		"topthink/think-throttle": "2.0.2",
+		"topthink/think-migration": "3.1.1",
+		"symfony/http-foundation": "^5.4|^6.4|^7.1",
+		"phpmailer/phpmailer": "^6.8",
+		"guzzlehttp/guzzle": "^7.8.1",
+		"voku/anti-xss": "^4.1",
+		"nelexa/zip": "^4.0.0",
+		"ext-bcmath": "*",
+		"ext-iconv": "*",
+		"ext-json": "*",
+		"ext-gd": "*",
+		"workerman/gateway-worker": "^3.1",
+		"wechatpay/wechatpay": "^1.4",
+		"overtrue/easy-sms": "^2.4.2",
+		"ext-openssl": "*",
+		"ext-curl": "*",
+		"endroid/qr-code": "^5.1",
+		"topthink/think-view": "^2.0",
+		"sonata-project/google-authenticator": "^2.3",
+		"topthink/think-queue": "^3.0",
+		"ext-zip": "*",
+		"ext-redis": "*",
+		"alipaysdk/easysdk": "^2.0.0",
+		"khanamiryan/qrcode-detector-decoder": "^2.0",
+		"alibabacloud/ocr-api-20210707": "3.1.3",
+		"ext-simplexml": "*",
+		"ext-libxml": "*",
+		"yansongda/pay": "~3.7.0",
+		"hyperf/pimple": "~2.2.0",
+		"zoujingli/wechat-developer": "^1.2"
+	},
+	"require-dev": {
+		"symfony/var-dumper": "^5.4",
+		"topthink/think-trace": "^1.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"app\\": "app",
+			"modules\\": "modules",
+			"ba\\": "extend/ba/"
+		}
+	},
+	"config": {
+		"preferred-install": "dist"
+	},
+	"scripts": {
+		"post-autoload-dump": [
+			"@php think service:discover",
+			"@php think vendor:publish"
+		]
+	}
+}

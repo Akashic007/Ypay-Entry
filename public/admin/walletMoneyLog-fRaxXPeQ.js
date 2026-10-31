@@ -1,0 +1,1 @@
+const e={id:"ID",user_id:"用户ID",user__username:"用户名",money:"变更余额",before_money:"变更前余额",before_withdrawal_money:"变更前可提现余额",before_freeze_money:"变更前冻结余额",after_money:"变更后余额",after_withdrawal_money:"变更后提现余额",after_freeze_money:"变更后冻结余额",type:"操作类型",remark:"备注",content:"相关内容",create_time:"创建时间","quick Search Fields":"ID"};export{e as default};

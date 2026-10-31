@@ -1,0 +1,1 @@
+const e={id:"ID",name:"池名称",user_id:"用户ID",user__username:"用户名",pay_type:"支付方式",channel_mode:"轮询模式",status:"状态","status 0":"禁用","status 1":"启用",remark:"备注",weigh:"权重","quick Search Fields":"ID"};export{e as default};

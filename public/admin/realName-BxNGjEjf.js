@@ -1,0 +1,1 @@
+const e={id:"ID",admin_id:"管理员ID",admin__username:"用户名",name:"名称",id_no:"身份证号码",business_id:"业务ID",remark:"备注",status:"状态",create_time:"创建时间",update_time:"修改时间",real_time:"实名时间","quick Search Fields":"ID"};export{e as default};

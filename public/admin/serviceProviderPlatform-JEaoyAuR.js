@@ -1,0 +1,1 @@
+const t={id:"ID",sp_id:"服务商ID",sp__name:"服务商名称",platform_code:"平台代码","platform_code wxpay":"微信支付","platform_code alipay":"支付宝",config:"OAuth2配置",status:"状态","status 0":"禁用","status 1":"启用",create_time:"创建时间",update_time:"修改时间","quick Search Fields":"ID"};export{t as default};

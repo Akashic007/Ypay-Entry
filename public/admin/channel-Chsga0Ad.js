@@ -1,0 +1,1 @@
+const e={id:"id",name:"name",type:"type",driver:"driver",config:"config",status:"status","status 0":"status 0","status 1":"status 1",weigh:"weigh",remark:"remark",create_time:"create_time","quick Search Fields":"id"};export{e as default};

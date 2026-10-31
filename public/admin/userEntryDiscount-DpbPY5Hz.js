@@ -1,0 +1,1 @@
+const e={id:"ID",user_id:"代理用户ID",user__username:"用户名",agent_id:"代理ID",agent__id:"ID",agent__user_id:"用户ID",ec_id:"进件通道",ec__platform_code:"平台代码","ec__platform_code wxpay":"微信支付","ec__platform_code alipay":"支付宝",ec__sp_id:"服务商ID",discount:"折扣",remark:"备注",status:"状态","status 0":"禁用","status 1":"启用",create_time:"创建时间","quick Search Fields":"ID"};export{e as default};

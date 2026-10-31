@@ -1,0 +1,1 @@
+const t={id:"id",name:"name",code:"code",status:"status","status 0":"status 0","status 1":"status 1",price:"price",rebate_ratio:"rebate_ratio",entry_discount:"entry_discount",remark:"remark",create_time:"create_time","quick Search Fields":"id"};export{t as default};

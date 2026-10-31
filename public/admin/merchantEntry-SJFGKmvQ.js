@@ -1,0 +1,1 @@
+import{d as e}from"./index-BTyuSSLw.js";const n="/admin/merchant.MerchantEntry/";function a(t){return e({url:n+"getApplyInfo",method:"get",params:{id:t}})}function o(t){return e({url:"/admin/entryChannel.Alipay/getMchAppAuthTokenUrl",method:"get",params:{id:t}})}export{o as a,a as g};

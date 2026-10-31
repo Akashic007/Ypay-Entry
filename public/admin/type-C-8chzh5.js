@@ -1,0 +1,1 @@
+const t={id:"id",pay_type:"pay_type",paytypetable__name:"name",type:"type",name:"name",config:"config",extend:"extend",remark:"remark",status:"status","status 0":"status 0","status 1":"status 1","quick Search Fields":"id"};export{t as default};

@@ -1,0 +1,1 @@
+import{j as e,k as o,u as a}from"./index-w2MoMf7b.js";const n=o({onChanged(s){const t=a();l(s),t.setLayout("isDark",s),t.onSetLayoutColor()}}),u=e(n);function l(s){const t=document.getElementsByTagName("html")[0];s?t.setAttribute("class","dark"):t.setAttribute("class","")}export{u as t};

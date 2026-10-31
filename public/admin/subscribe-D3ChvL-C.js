@@ -1,0 +1,1 @@
+const e={id:"id",name:"name",price:"price",duration:"duration",channel_number:"channel_number",order_rate:"order_rate",status:"status","status 0":"status 0","status 1":"status 1",weigh:"weigh",create_time:"create_time",update_time:"update_time","quick Search Fields":"id"};export{e as default};

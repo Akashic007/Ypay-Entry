@@ -1,0 +1,1 @@
+const e={id:"ID",name:"通道名称",type:"通道类型",driver:"驱动类型",config:"配置",status:"状态","status 0":"禁用","status 1":"启用",weigh:"权重",remark:"备注",create_time:"创建时间","quick Search Fields":"ID"};export{e as default};

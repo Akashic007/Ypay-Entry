@@ -1,0 +1,1 @@
+const t={id:"ID",name:"模板名称",title:"邮件标题",content:"邮件内容",status:"状态","status 0":"禁用","status 1":"启用",remark:"备注",update_time:"修改时间",create_time:"创建时间","quick Search Fields":"ID、名称、标题","Content tips":"可使用 {'{'}varName{'}'} 定义变量","Name tips":"您可以使用模板ID或名称发送邮件"};export{t as default};

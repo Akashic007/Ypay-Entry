@@ -1,0 +1,1 @@
+const t={id:"id",user_id:"user_id",user__username:"username",type:"type",uid:"uid",content:"content",login_ip:"login_ip",create_time:"create_time",status:"status","status 0":"status 0","status 1":"status 1","quick Search Fields":"id"};export{t as default};

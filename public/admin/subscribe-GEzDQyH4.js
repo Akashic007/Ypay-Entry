@@ -1,0 +1,1 @@
+const e={id:"ID",name:"套餐名称",price:"价格",duration:"套餐时长",channel_number:"通道数量",order_rate:"订单费率",status:"状态","status 0":"禁用","status 1":"启用",weigh:"权重",create_time:"创建时间",update_time:"修改时间","quick Search Fields":"ID"};export{e as default};

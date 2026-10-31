@@ -1,0 +1,1 @@
+const e={id:"ID",agent_id:"代理ID",agent__id:"ID",user_id:"用户ID",user__username:"用户名",me_id:"进件记录ID",me__business_id:"业务编号",price:"收取价格",create_time:"创建时间","quick Search Fields":"ID"};export{e as default};

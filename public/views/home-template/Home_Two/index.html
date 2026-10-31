@@ -1,0 +1,2421 @@
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+		/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+		<title>{$site_name}-{$site_title}</title>
+
+		<meta name="keywords" content="{$site_keyword}" />
+		<meta name="description" content="{$site_description}" />
+
+		<!-- Favicon -->
+		<link rel="icon" type="image/x-icon" href="{$site_ico}" />
+
+		<link
+			rel="stylesheet"
+			href="/views/home-template/Home_Two/css/index.css"
+		/>
+	</head>
+	<body class="font-sans antialiased">
+		<main class="min-h-screen">
+			<header
+				class="fixed top-0 left-0 right-0 z-50 bg-card/70 backdrop-blur-xl border-b border-border/50"
+			>
+				<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+					<div class="flex items-center justify-between h-16">
+						<a class="flex items-center gap-2.5" href="/">
+							<div
+								class="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="lucide lucide-leaf w-5 h-5 text-primary"
+								>
+									<path
+										d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"
+									></path>
+									<path
+										d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"
+									></path>
+								</svg>
+							</div>
+							<span
+								class="font-semibold text-lg text-foreground tracking-tight"
+								>{$site_name}</span
+							>
+						</a>
+						<nav class="hidden md:flex items-center gap-8">
+							{foreach $home_menu as $key=>$val }
+							<a
+								class="text-muted-foreground hover:text-primary transition-colors text-sm font-medium"
+								href="{$val.value}"
+								>{$val.key}</a
+							>
+							{/foreach}
+						</nav>
+						<div
+							id="authContainer"
+							class="hidden md:flex items-center gap-4"
+						>
+							<!-- 这里会通过JavaScript根据localStorage中的token动态显示内容 -->
+						</div>
+						<script>
+							// 检查localStorage中是否存在token
+							const token = localStorage.getItem("accessToken");
+							const authContainer =
+								document.getElementById("authContainer");
+
+							if (token) {
+								// 如果有token，显示已登录状态
+								authContainer.innerHTML = `
+                                    <!-- 用户操作区 -->
+                                    <a href="/dashboard/analytics"  rel="noopener noreferrer" data-slot="button"
+                            class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 py-2 has-[>svg]:px-3 rounded-full px-6 shadow-sm shadow-primary/20">控制台</a>
+                                `;
+							} else {
+								// 如果没有token，显示登录注册按钮
+								authContainer.innerHTML = `
+                                   <a href="/login"
+                             rel="noopener noreferrer" data-slot="button"
+                            class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 py-2 has-[>svg]:px-3 rounded-full px-6 shadow-sm shadow-primary/20">登录</a>
+                                `;
+							}
+						</script>
+					</div>
+				</div>
+			</header>
+			<section
+				class="pt-28 pb-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
+			>
+				<div
+					class="absolute top-20 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl"
+				></div>
+				<div
+					class="absolute bottom-0 right-1/4 w-80 h-80 bg-accent/5 rounded-full blur-3xl"
+				></div>
+				<div class="max-w-5xl mx-auto text-center relative">
+					<div
+						class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/80 border border-border/50 mb-8 backdrop-blur-sm"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="lucide lucide-sparkles w-4 h-4 text-primary"
+						>
+							<path
+								d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"
+							></path>
+							<path d="M20 3v4"></path>
+							<path d="M22 5h-4"></path>
+							<path d="M4 17v2"></path>
+							<path d="M5 18H3"></path></svg
+						><span class="text-sm text-foreground/80"
+							>{$site_title} · 即将上线</span
+						>
+					</div>
+					<h1
+						class="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight text-balance mb-6"
+					>
+						一站式<span class="text-primary">支付进件</span
+						>平台<br /><span
+							class="text-muted-foreground text-3xl sm:text-4xl lg:text-5xl"
+							>多渠道接入 · 合规运营</span
+						>
+					</h1>
+					<p
+						class="text-lg text-muted-foreground max-w-2xl mx-auto mb-8 text-pretty leading-relaxed"
+					>
+						{$site_title}支持主流支付渠道快速进件，集成实名认证、智能风控、商户核验等合规能力，助力您安全、高效地开展支付业务。
+					</p>
+					<div
+						class="flex flex-wrap items-center justify-center gap-2 mb-10"
+					>
+						<div
+							class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-card border border-border/50 text-sm text-foreground/80"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="lucide lucide-circle-check w-3.5 h-3.5 text-primary"
+							>
+								<circle cx="12" cy="12" r="10"></circle>
+								<path d="m9 12 2 2 4-4"></path></svg
+							>支付宝
+						</div>
+						<div
+							class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-card border border-border/50 text-sm text-foreground/80"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="lucide lucide-circle-check w-3.5 h-3.5 text-primary"
+							>
+								<circle cx="12" cy="12" r="10"></circle>
+								<path d="m9 12 2 2 4-4"></path></svg
+							>微信支付
+						</div>
+						<div
+							class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-card border border-border/50 text-sm text-foreground/80"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="lucide lucide-circle-check w-3.5 h-3.5 text-primary"
+							>
+								<circle cx="12" cy="12" r="10"></circle>
+								<path d="m9 12 2 2 4-4"></path></svg
+							>拉卡拉
+						</div>
+						<div
+							class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-card border border-border/50 text-sm text-foreground/80"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="lucide lucide-circle-check w-3.5 h-3.5 text-primary"
+							>
+								<circle cx="12" cy="12" r="10"></circle>
+								<path d="m9 12 2 2 4-4"></path></svg
+							>银联
+						</div>
+						<div
+							class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-card border border-border/50 text-sm text-foreground/80"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="lucide lucide-circle-check w-3.5 h-3.5 text-primary"
+							>
+								<circle cx="12" cy="12" r="10"></circle>
+								<path d="m9 12 2 2 4-4"></path></svg
+							>云闪付
+						</div>
+						<div
+							class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-card border border-border/50 text-sm text-foreground/80"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="lucide lucide-circle-check w-3.5 h-3.5 text-primary"
+							>
+								<circle cx="12" cy="12" r="10"></circle>
+								<path d="m9 12 2 2 4-4"></path></svg
+							>翼支付
+						</div>
+						<div
+							class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-sm text-primary font-medium"
+						>
+							更多渠道持续接入中
+						</div>
+					</div>
+					<div
+						class="flex flex-col sm:flex-row items-center justify-center gap-4"
+					>
+						<a
+							data-slot="button"
+							class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-10 has-[>svg]:px-4 rounded-full px-8 shadow-lg shadow-primary/20"
+							href="/login"
+							>登录<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="lucide lucide-arrow-right ml-2 w-4 h-4"
+							>
+								<path d="M5 12h14"></path>
+								<path d="m12 5 7 7-7 7"></path></svg
+						></a>
+					</div>
+				</div>
+			</section>
+			<section id="products" class="py-20 px-4 sm:px-6 lg:px-8">
+				<div class="max-w-6xl mx-auto">
+					<div class="text-center mb-14">
+						<div
+							class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4"
+						>
+							核心能力
+						</div>
+						<h2
+							class="text-2xl sm:text-3xl font-bold text-foreground mb-3"
+						>
+							强大的支付进件管理系统
+						</h2>
+						<p class="text-muted-foreground max-w-2xl mx-auto">
+							{$site_title}提供全方位的支付进件解决方案，从渠道接入到风控合规，一站式满足您的业务需求
+						</p>
+					</div>
+					<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+						<div
+							class="bg-card rounded-2xl p-6 border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group"
+						>
+							<div
+								class="w-12 h-12 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="lucide lucide-zap w-6 h-6"
+								>
+									<path
+										d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"
+									></path>
+								</svg>
+							</div>
+							<h3
+								class="text-lg font-semibold text-foreground mb-2"
+							>
+								多渠道进件
+							</h3>
+							<p
+								class="text-sm text-muted-foreground leading-relaxed"
+							>
+								支持支付宝、微信支付、拉卡拉、银联、云闪付等主流支付渠道一站式进件，统一管理，高效便捷
+							</p>
+						</div>
+						<div
+							class="bg-card rounded-2xl p-6 border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group"
+						>
+							<div
+								class="w-12 h-12 rounded-xl bg-sky-50 text-sky-500 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="lucide lucide-fingerprint w-6 h-6"
+								>
+									<path
+										d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"
+									></path>
+									<path
+										d="M14 13.12c0 2.38 0 6.38-1 8.88"
+									></path>
+									<path
+										d="M17.29 21.02c.12-.6.43-2.3.5-3.02"
+									></path>
+									<path d="M2 12a10 10 0 0 1 18-6"></path>
+									<path d="M2 16h.01"></path>
+									<path
+										d="M21.8 16c.2-2 .131-5.354 0-6"
+									></path>
+									<path
+										d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2"
+									></path>
+									<path
+										d="M8.65 22c.21-.66.45-1.32.57-2"
+									></path>
+									<path d="M9 6.8a6 6 0 0 1 9 5.2v2"></path>
+								</svg>
+							</div>
+							<h3
+								class="text-lg font-semibold text-foreground mb-2"
+							>
+								实名认证管理
+							</h3>
+							<p
+								class="text-sm text-muted-foreground leading-relaxed"
+							>
+								集成权威身份核验接口，支持身份证OCR识别、人脸活体检测、银行卡三要素验证，确保商户身份真实可信
+							</p>
+						</div>
+						<div
+							class="bg-card rounded-2xl p-6 border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group"
+						>
+							<div
+								class="w-12 h-12 rounded-xl bg-rose-50 text-rose-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="lucide lucide-shield w-6 h-6"
+								>
+									<path
+										d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"
+									></path>
+								</svg>
+							</div>
+							<h3
+								class="text-lg font-semibold text-foreground mb-2"
+							>
+								智能风控系统
+							</h3>
+							<p
+								class="text-sm text-muted-foreground leading-relaxed"
+							>
+								基于AI的实时风险监测，多维度交易分析，异常行为预警，黑名单拦截，全方位保障交易安全
+							</p>
+						</div>
+						<div
+							class="bg-card rounded-2xl p-6 border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group"
+						>
+							<div
+								class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="lucide lucide-user-check w-6 h-6"
+								>
+									<path
+										d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
+									></path>
+									<circle cx="9" cy="7" r="4"></circle>
+									<polyline
+										points="16 11 18 13 22 9"
+									></polyline>
+								</svg>
+							</div>
+							<h3
+								class="text-lg font-semibold text-foreground mb-2"
+							>
+								商户真实性核验
+							</h3>
+							<p
+								class="text-sm text-muted-foreground leading-relaxed"
+							>
+								工商信息验证、经营资质审核、法人信息比对、经营场所核实，多维度确保商户真实合规
+							</p>
+						</div>
+						<div
+							class="bg-card rounded-2xl p-6 border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group"
+						>
+							<div
+								class="w-12 h-12 rounded-xl bg-violet-50 text-violet-500 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="lucide lucide-chart-column w-6 h-6"
+								>
+									<path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
+									<path d="M18 17V9"></path>
+									<path d="M13 17V5"></path>
+									<path d="M8 17v-3"></path>
+								</svg>
+							</div>
+							<h3
+								class="text-lg font-semibold text-foreground mb-2"
+							>
+								数据分析中心
+							</h3>
+							<p
+								class="text-sm text-muted-foreground leading-relaxed"
+							>
+								交易数据实时统计，多维报表自动生成，经营趋势智能分析，助您科学决策
+							</p>
+						</div>
+						<div
+							class="bg-card rounded-2xl p-6 border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group"
+						>
+							<div
+								class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-500 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="lucide lucide-file-check w-6 h-6"
+								>
+									<path
+										d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"
+									></path>
+									<path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+									<path d="m9 15 2 2 4-4"></path>
+								</svg>
+							</div>
+							<h3
+								class="text-lg font-semibold text-foreground mb-2"
+							>
+								合规审核引擎
+							</h3>
+							<p
+								class="text-sm text-muted-foreground leading-relaxed"
+							>
+								内置监管规则库，自动化合规检测，资质到期提醒，确保业务始终符合监管要求
+							</p>
+						</div>
+						<div
+							class="bg-card rounded-2xl p-6 border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group"
+						>
+							<div
+								class="w-12 h-12 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="lucide lucide-triangle-alert w-6 h-6"
+								>
+									<path
+										d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"
+									></path>
+									<path d="M12 9v4"></path>
+									<path d="M12 17h.01"></path>
+								</svg>
+							</div>
+							<h3
+								class="text-lg font-semibold text-foreground mb-2"
+							>
+								交易监控预警
+							</h3>
+							<p
+								class="text-sm text-muted-foreground leading-relaxed"
+							>
+								7x24小时交易监控，可疑交易实时预警，异常模式自动识别，风险事件快速响应
+							</p>
+						</div>
+						<div
+							class="bg-card rounded-2xl p-6 border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group"
+						>
+							<div
+								class="w-12 h-12 rounded-xl bg-cyan-50 text-cyan-500 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="lucide lucide-building2 w-6 h-6"
+								>
+									<path
+										d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"
+									></path>
+									<path
+										d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"
+									></path>
+									<path
+										d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"
+									></path>
+									<path d="M10 6h4"></path>
+									<path d="M10 10h4"></path>
+									<path d="M10 14h4"></path>
+									<path d="M10 18h4"></path>
+								</svg>
+							</div>
+							<h3
+								class="text-lg font-semibold text-foreground mb-2"
+							>
+								商户分级管理
+							</h3>
+							<p
+								class="text-sm text-muted-foreground leading-relaxed"
+							>
+								支持商户分级分类，差异化费率配置，灵活的权限管理，满足多层级运营需求
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="py-20 px-4 sm:px-6 lg:px-8">
+				<div class="max-w-6xl mx-auto">
+					<div class="text-center mb-12">
+						<div
+							class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4"
+						>
+							支付渠道
+						</div>
+						<h2
+							class="text-2xl sm:text-3xl font-bold text-foreground mb-3"
+						>
+							支持主流支付渠道进件
+						</h2>
+						<p class="text-muted-foreground max-w-2xl mx-auto">
+							一站式对接各大支付平台，统一管理商户进件，简化接入流程，降低运营成本
+						</p>
+					</div>
+					<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+						<div
+							class="bg-card rounded-2xl p-6 border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group"
+						>
+							<div class="flex items-start justify-between mb-4">
+								<div>
+									<h3
+										class="text-lg font-semibold text-foreground"
+									>
+										支付宝
+									</h3>
+									<span class="text-xs text-muted-foreground"
+										>移动支付</span
+									>
+								</div>
+								<div class="text-right">
+									<div
+										class="text-sm font-medium text-primary"
+									>
+										0.38%起
+									</div>
+									<div class="text-xs text-muted-foreground">
+										结算:
+										<!-- -->T+1
+									</div>
+								</div>
+							</div>
+							<div class="space-y-2">
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>当面付
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>APP支付
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>H5支付
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>小程序支付
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>预授权
+								</div>
+							</div>
+						</div>
+						<div
+							class="bg-card rounded-2xl p-6 border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group"
+						>
+							<div class="flex items-start justify-between mb-4">
+								<div>
+									<h3
+										class="text-lg font-semibold text-foreground"
+									>
+										微信支付
+									</h3>
+									<span class="text-xs text-muted-foreground"
+										>移动支付</span
+									>
+								</div>
+								<div class="text-right">
+									<div
+										class="text-sm font-medium text-primary"
+									>
+										0.38%起
+									</div>
+									<div class="text-xs text-muted-foreground">
+										结算:
+										<!-- -->T+1
+									</div>
+								</div>
+							</div>
+							<div class="space-y-2">
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>扫码支付
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>JSAPI支付
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>小程序支付
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>APP支付
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>H5支付
+								</div>
+							</div>
+						</div>
+						<div
+							class="bg-card rounded-2xl p-6 border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group"
+						>
+							<div class="flex items-start justify-between mb-4">
+								<div>
+									<h3
+										class="text-lg font-semibold text-foreground"
+									>
+										拉卡拉
+									</h3>
+									<span class="text-xs text-muted-foreground"
+										>综合支付</span
+									>
+								</div>
+								<div class="text-right">
+									<div
+										class="text-sm font-medium text-primary"
+									>
+										0.50%起
+									</div>
+									<div class="text-xs text-muted-foreground">
+										结算:
+										<!-- -->T+1/D+0
+									</div>
+								</div>
+							</div>
+							<div class="space-y-2">
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>POS收款
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>扫码支付
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>快捷支付
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>代收代付
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>跨境支付
+								</div>
+							</div>
+						</div>
+						<div
+							class="bg-card rounded-2xl p-6 border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group"
+						>
+							<div class="flex items-start justify-between mb-4">
+								<div>
+									<h3
+										class="text-lg font-semibold text-foreground"
+									>
+										银联云闪付
+									</h3>
+									<span class="text-xs text-muted-foreground"
+										>银行卡支付</span
+									>
+								</div>
+								<div class="text-right">
+									<div
+										class="text-sm font-medium text-primary"
+									>
+										0.35%起
+									</div>
+									<div class="text-xs text-muted-foreground">
+										结算:
+										<!-- -->T+1
+									</div>
+								</div>
+							</div>
+							<div class="space-y-2">
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>云闪付APP
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>银联在线
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>无卡快捷
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>二维码支付
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>NFC支付
+								</div>
+							</div>
+						</div>
+						<div
+							class="bg-card rounded-2xl p-6 border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group"
+						>
+							<div class="flex items-start justify-between mb-4">
+								<div>
+									<h3
+										class="text-lg font-semibold text-foreground"
+									>
+										翼支付
+									</h3>
+									<span class="text-xs text-muted-foreground"
+										>运营商支付</span
+									>
+								</div>
+								<div class="text-right">
+									<div
+										class="text-sm font-medium text-primary"
+									>
+										0.45%起
+									</div>
+									<div class="text-xs text-muted-foreground">
+										结算:
+										<!-- -->T+1
+									</div>
+								</div>
+							</div>
+							<div class="space-y-2">
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>话费支付
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>扫码支付
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>账户支付
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>分期付款
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>代扣服务
+								</div>
+							</div>
+						</div>
+						<div
+							class="bg-card rounded-2xl p-6 border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group"
+						>
+							<div class="flex items-start justify-between mb-4">
+								<div>
+									<h3
+										class="text-lg font-semibold text-foreground"
+									>
+										网联清算
+									</h3>
+									<span class="text-xs text-muted-foreground"
+										>清算通道</span
+									>
+								</div>
+								<div class="text-right">
+									<div
+										class="text-sm font-medium text-primary"
+									>
+										按量定价
+									</div>
+									<div class="text-xs text-muted-foreground">
+										结算:
+										<!-- -->实时/T+0
+									</div>
+								</div>
+							</div>
+							<div class="space-y-2">
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>协议支付
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>网关支付
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>认证支付
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>代收付
+								</div>
+								<div
+									class="flex items-center gap-2 text-sm text-muted-foreground"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-circle-check w-3.5 h-3.5 text-primary flex-shrink-0"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="m9 12 2 2 4-4"></path></svg
+									>跨行转账
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="text-center mt-10">
+						<p class="text-sm text-muted-foreground mb-4">
+							更多支付渠道持续接入中，支持定制化渠道对接需求
+						</p>
+						<a
+							data-slot="button"
+							class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-9 px-4 py-2 has-[>svg]:px-3 rounded-full bg-transparent"
+							href="/pricing"
+							>查看详细报价<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="lucide lucide-arrow-right ml-2 w-4 h-4"
+							>
+								<path d="M5 12h14"></path>
+								<path d="m12 5 7 7-7 7"></path></svg
+						></a>
+					</div>
+				</div>
+			</section>
+			<section class="py-16 px-4 sm:px-6 lg:px-8 bg-primary/5">
+				<div class="max-w-5xl mx-auto">
+					<div
+						class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6"
+					>
+						<div class="text-center p-4">
+							<div
+								class="text-2xl sm:text-3xl font-bold text-primary mb-1"
+							>
+								6+
+							</div>
+							<div class="text-sm text-muted-foreground">
+								支付渠道
+							</div>
+						</div>
+						<div class="text-center p-4">
+							<div
+								class="text-2xl sm:text-3xl font-bold text-primary mb-1"
+							>
+								99.99%
+							</div>
+							<div class="text-sm text-muted-foreground">
+								系统稳定性
+							</div>
+						</div>
+						<div class="text-center p-4">
+							<div
+								class="text-2xl sm:text-3xl font-bold text-primary mb-1"
+							>
+								100ms
+							</div>
+							<div class="text-sm text-muted-foreground">
+								进件响应
+							</div>
+						</div>
+						<div class="text-center p-4">
+							<div
+								class="text-2xl sm:text-3xl font-bold text-primary mb-1"
+							>
+								24/7
+							</div>
+							<div class="text-sm text-muted-foreground">
+								风控监测
+							</div>
+						</div>
+						<div class="text-center p-4">
+							<div
+								class="text-2xl sm:text-3xl font-bold text-primary mb-1"
+							>
+								T+1
+							</div>
+							<div class="text-sm text-muted-foreground">
+								快速结算
+							</div>
+						</div>
+						<div class="text-center p-4">
+							<div
+								class="text-2xl sm:text-3xl font-bold text-primary mb-1"
+							>
+								256位
+							</div>
+							<div class="text-sm text-muted-foreground">
+								数据加密
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section
+				id="solutions"
+				class="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30"
+			>
+				<div class="max-w-6xl mx-auto">
+					<div class="text-center mb-12">
+						<div
+							class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4"
+						>
+							行业方案
+						</div>
+						<h2
+							class="text-2xl sm:text-3xl font-bold text-foreground mb-3"
+						>
+							覆盖全行业的支付解决方案
+						</h2>
+						<p class="text-muted-foreground max-w-2xl mx-auto">
+							针对不同行业特点，提供定制化的支付进件方案，满足各类业务场景需求
+						</p>
+					</div>
+					<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+						<div
+							class="group p-5 rounded-2xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300"
+						>
+							<div
+								class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="lucide lucide-shopping-bag w-6 h-6 text-primary"
+								>
+									<path
+										d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"
+									></path>
+									<path d="M3 6h18"></path>
+									<path d="M16 10a4 4 0 0 1-8 0"></path>
+								</svg>
+							</div>
+							<h3 class="font-semibold text-foreground mb-1">
+								电商零售
+							</h3>
+							<p class="text-sm text-muted-foreground mb-3">
+								线上商城、小程序商城支付解决方案
+							</p>
+							<div class="flex flex-wrap gap-1.5">
+								<span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>多渠道收款</span
+								><span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>自动对账</span
+								><span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>分账结算</span
+								>
+							</div>
+						</div>
+						<div
+							class="group p-5 rounded-2xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300"
+						>
+							<div
+								class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="lucide lucide-store w-6 h-6 text-primary"
+								>
+									<path
+										d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"
+									></path>
+									<path
+										d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"
+									></path>
+									<path
+										d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"
+									></path>
+									<path d="M2 7h20"></path>
+									<path
+										d="M22 7v3a2 2 0 0 1-2 2a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7"
+									></path>
+								</svg>
+							</div>
+							<h3 class="font-semibold text-foreground mb-1">
+								线下门店
+							</h3>
+							<p class="text-sm text-muted-foreground mb-3">
+								实体店铺扫码支付、POS收款方案
+							</p>
+							<div class="flex flex-wrap gap-1.5">
+								<span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>聚合支付</span
+								><span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>会员管理</span
+								><span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>营销工具</span
+								>
+							</div>
+						</div>
+						<div
+							class="group p-5 rounded-2xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300"
+						>
+							<div
+								class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="lucide lucide-coffee w-6 h-6 text-primary"
+								>
+									<path d="M10 2v2"></path>
+									<path d="M14 2v2"></path>
+									<path
+										d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"
+									></path>
+									<path d="M6 2v2"></path>
+								</svg>
+							</div>
+							<h3 class="font-semibold text-foreground mb-1">
+								餐饮服务
+							</h3>
+							<p class="text-sm text-muted-foreground mb-3">
+								餐厅、外卖、连锁餐饮支付方案
+							</p>
+							<div class="flex flex-wrap gap-1.5">
+								<span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>扫码点餐</span
+								><span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>外卖对接</span
+								><span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>连锁管理</span
+								>
+							</div>
+						</div>
+						<div
+							class="group p-5 rounded-2xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300"
+						>
+							<div
+								class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="lucide lucide-building2 w-6 h-6 text-primary"
+								>
+									<path
+										d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"
+									></path>
+									<path
+										d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"
+									></path>
+									<path
+										d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"
+									></path>
+									<path d="M10 6h4"></path>
+									<path d="M10 10h4"></path>
+									<path d="M10 14h4"></path>
+									<path d="M10 18h4"></path>
+								</svg>
+							</div>
+							<h3 class="font-semibold text-foreground mb-1">
+								企业服务
+							</h3>
+							<p class="text-sm text-muted-foreground mb-3">
+								B2B交易、企业采购支付解决方案
+							</p>
+							<div class="flex flex-wrap gap-1.5">
+								<span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>大额支付</span
+								><span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>账期管理</span
+								><span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>发票对接</span
+								>
+							</div>
+						</div>
+						<div
+							class="group p-5 rounded-2xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300"
+						>
+							<div
+								class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="lucide lucide-graduation-cap w-6 h-6 text-primary"
+								>
+									<path
+										d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"
+									></path>
+									<path d="M22 10v6"></path>
+									<path
+										d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"
+									></path>
+								</svg>
+							</div>
+							<h3 class="font-semibold text-foreground mb-1">
+								教育培训
+							</h3>
+							<p class="text-sm text-muted-foreground mb-3">
+								学费缴纳、课程购买支付方案
+							</p>
+							<div class="flex flex-wrap gap-1.5">
+								<span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>分期付款</span
+								><span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>班级收费</span
+								><span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>财务报表</span
+								>
+							</div>
+						</div>
+						<div
+							class="group p-5 rounded-2xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300"
+						>
+							<div
+								class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="lucide lucide-heart w-6 h-6 text-primary"
+								>
+									<path
+										d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+									></path>
+								</svg>
+							</div>
+							<h3 class="font-semibold text-foreground mb-1">
+								医疗健康
+							</h3>
+							<p class="text-sm text-muted-foreground mb-3">
+								诊疗缴费、健康服务支付方案
+							</p>
+							<div class="flex flex-wrap gap-1.5">
+								<span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>医保对接</span
+								><span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>处方支付</span
+								><span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>预约缴费</span
+								>
+							</div>
+						</div>
+						<div
+							class="group p-5 rounded-2xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300"
+						>
+							<div
+								class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="lucide lucide-truck w-6 h-6 text-primary"
+								>
+									<path
+										d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"
+									></path>
+									<path d="M15 18H9"></path>
+									<path
+										d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"
+									></path>
+									<circle cx="17" cy="18" r="2"></circle>
+									<circle cx="7" cy="18" r="2"></circle>
+								</svg>
+							</div>
+							<h3 class="font-semibold text-foreground mb-1">
+								物流配送
+							</h3>
+							<p class="text-sm text-muted-foreground mb-3">
+								物流运输、快递配送支付方案
+							</p>
+							<div class="flex flex-wrap gap-1.5">
+								<span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>代收货款</span
+								><span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>运费结算</span
+								><span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>保险代扣</span
+								>
+							</div>
+						</div>
+						<div
+							class="group p-5 rounded-2xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300"
+						>
+							<div
+								class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="lucide lucide-globe w-6 h-6 text-primary"
+								>
+									<circle cx="12" cy="12" r="10"></circle>
+									<path
+										d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"
+									></path>
+									<path d="M2 12h20"></path>
+								</svg>
+							</div>
+							<h3 class="font-semibold text-foreground mb-1">
+								跨境贸易
+							</h3>
+							<p class="text-sm text-muted-foreground mb-3">
+								跨境电商、国际贸易支付方案
+							</p>
+							<div class="flex flex-wrap gap-1.5">
+								<span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>多币种</span
+								><span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>汇率管理</span
+								><span
+									class="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground"
+									>合规清关</span
+								>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section id="about" class="py-20 px-4 sm:px-6 lg:px-8">
+				<div class="max-w-6xl mx-auto">
+					<div class="grid lg:grid-cols-2 gap-12 items-center">
+						<div class="order-2 lg:order-1">
+							<div
+								class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="lucide lucide-leaf w-4 h-4"
+								>
+									<path
+										d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"
+									></path>
+									<path
+										d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"
+									></path></svg
+								>关于我们
+							</div>
+							<h2
+								class="text-2xl sm:text-3xl font-bold text-foreground mb-5"
+							>
+								专业可信赖的支付服务商
+							</h2>
+							<p
+								class="text-muted-foreground leading-relaxed mb-6"
+							>
+								{$site_title}专注于支付进件领域，为企业提供安全、合规、高效的支付解决方案。我们拥有完善的风控体系和专业的技术团队，致力于帮助商户快速接入各大支付渠道，实现业务的数字化升级。
+							</p>
+							<p
+								class="text-muted-foreground leading-relaxed mb-8"
+							>
+								系统严格遵循国家金融监管要求，所有商户需通过实名认证和资质审核，确保交易安全合规。我们承诺不为任何违法违规行为提供服务支持。
+							</p>
+							<div class="grid grid-cols-2 gap-4 mb-8">
+								<div class="flex items-center gap-3">
+									<div
+										class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center"
+									>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="24"
+											height="24"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											class="lucide lucide-shield w-5 h-5 text-primary"
+										>
+											<path
+												d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"
+											></path>
+										</svg>
+									</div>
+									<span
+										class="text-sm font-medium text-foreground"
+										>银行级安全标准</span
+									>
+								</div>
+								<div class="flex items-center gap-3">
+									<div
+										class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center"
+									>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="24"
+											height="24"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											class="lucide lucide-award w-5 h-5 text-primary"
+										>
+											<path
+												d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"
+											></path>
+											<circle
+												cx="12"
+												cy="8"
+												r="6"
+											></circle>
+										</svg>
+									</div>
+									<span
+										class="text-sm font-medium text-foreground"
+										>PCI DSS 认证</span
+									>
+								</div>
+								<div class="flex items-center gap-3">
+									<div
+										class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center"
+									>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="24"
+											height="24"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											class="lucide lucide-file-check w-5 h-5 text-primary"
+										>
+											<path
+												d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"
+											></path>
+											<path
+												d="M14 2v4a2 2 0 0 0 2 2h4"
+											></path>
+											<path d="m9 15 2 2 4-4"></path>
+										</svg>
+									</div>
+									<span
+										class="text-sm font-medium text-foreground"
+										>合规持牌运营</span
+									>
+								</div>
+								<div class="flex items-center gap-3">
+									<div
+										class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center"
+									>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="24"
+											height="24"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											class="lucide lucide-circle-check w-5 h-5 text-primary"
+										>
+											<circle
+												cx="12"
+												cy="12"
+												r="10"
+											></circle>
+											<path d="m9 12 2 2 4-4"></path>
+										</svg>
+									</div>
+									<span
+										class="text-sm font-medium text-foreground"
+										>专业技术团队</span
+									>
+								</div>
+							</div>
+							<div
+								class="p-4 rounded-xl bg-secondary/50 border border-border/50"
+							>
+								<p class="text-xs text-muted-foreground mb-2">
+									资质认证
+								</p>
+								<div class="flex flex-wrap gap-2">
+									<span
+										class="text-xs px-2 py-1 rounded-full bg-card border border-border/50 text-foreground/80"
+										>支付业务许可证</span
+									><span
+										class="text-xs px-2 py-1 rounded-full bg-card border border-border/50 text-foreground/80"
+										>ICP经营许可证</span
+									><span
+										class="text-xs px-2 py-1 rounded-full bg-card border border-border/50 text-foreground/80"
+										>ISO27001信息安全认证</span
+									><span
+										class="text-xs px-2 py-1 rounded-full bg-card border border-border/50 text-foreground/80"
+										>等保三级认证</span
+									>
+								</div>
+							</div>
+						</div>
+						<div class="order-1 lg:order-2">
+							<div
+								class="aspect-square max-w-sm mx-auto rounded-3xl bg-secondary/50 border border-border/50 flex items-center justify-center relative overflow-hidden"
+							>
+								<div
+									class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,var(--primary)_0%,transparent_70%)] opacity-5"
+								></div>
+								<div class="text-center relative p-8">
+									<div
+										class="w-24 h-24 rounded-2xl bg-primary/10 mx-auto flex items-center justify-center mb-6"
+									>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="24"
+											height="24"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											class="lucide lucide-leaf w-12 h-12 text-primary"
+										>
+											<path
+												d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"
+											></path>
+											<path
+												d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"
+											></path>
+										</svg>
+									</div>
+									<p
+										class="text-2xl font-bold text-foreground mb-2"
+									>
+										{$site_title}
+									</p>
+									<p
+										class="text-sm text-muted-foreground mb-4"
+									>
+										专业 · 安全 · 合规
+									</p>
+									<div
+										class="text-xs text-muted-foreground px-4 py-2 rounded-full bg-card border border-border/50 inline-block"
+									>
+										{$site_name}.cn
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section id="contact" class="py-20 px-4 sm:px-6 lg:px-8">
+				<div class="max-w-6xl mx-auto">
+					<div
+						class="bg-card rounded-3xl border border-border/50 overflow-hidden"
+					>
+						<div class="grid lg:grid-cols-5">
+							<div
+								class="lg:col-span-2 p-8 sm:p-10 bg-secondary/30"
+							>
+								<h2
+									class="text-2xl font-bold text-foreground mb-2"
+								>
+									联系我们
+								</h2>
+								<p class="text-muted-foreground text-sm mb-8">
+									有任何问题，随时与我们联系
+								</p>
+								<div class="space-y-6">
+									<div class="flex items-center gap-4">
+										<div
+											class="w-10 h-10 rounded-xl bg-card border border-border/50 flex items-center justify-center flex-shrink-0"
+										>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												width="24"
+												height="24"
+												viewBox="0 0 24 24"
+												fill="none"
+												stroke="currentColor"
+												stroke-width="2"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												class="lucide lucide-mail w-4 h-4 text-primary"
+											>
+												<rect
+													width="20"
+													height="16"
+													x="2"
+													y="4"
+													rx="2"
+												></rect>
+												<path
+													d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"
+												></path>
+											</svg>
+										</div>
+										<div>
+											<p
+												class="text-xs text-muted-foreground mb-0.5"
+											>
+												邮箱
+											</p>
+											<p class="text-sm text-foreground">
+												contact@{$site_name}.cn
+											</p>
+										</div>
+									</div>
+									<div class="flex items-center gap-4">
+										<div
+											class="w-10 h-10 rounded-xl bg-card border border-border/50 flex items-center justify-center flex-shrink-0"
+										>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												width="24"
+												height="24"
+												viewBox="0 0 24 24"
+												fill="none"
+												stroke="currentColor"
+												stroke-width="2"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												class="lucide lucide-phone w-4 h-4 text-primary"
+											>
+												<path
+													d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+												></path>
+											</svg>
+										</div>
+										<div>
+											<p
+												class="text-xs text-muted-foreground mb-0.5"
+											>
+												电话
+											</p>
+											<p class="text-sm text-foreground">
+												400-888-8888
+											</p>
+										</div>
+									</div>
+									<div class="flex items-center gap-4">
+										<div
+											class="w-10 h-10 rounded-xl bg-card border border-border/50 flex items-center justify-center flex-shrink-0"
+										>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												width="24"
+												height="24"
+												viewBox="0 0 24 24"
+												fill="none"
+												stroke="currentColor"
+												stroke-width="2"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												class="lucide lucide-map-pin w-4 h-4 text-primary"
+											>
+												<path
+													d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
+												></path>
+												<circle
+													cx="12"
+													cy="10"
+													r="3"
+												></circle>
+											</svg>
+										</div>
+										<div>
+											<p
+												class="text-xs text-muted-foreground mb-0.5"
+											>
+												地址
+											</p>
+											<p class="text-sm text-foreground">
+												中国 · 北京
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div
+								class="lg:col-span-3 p-8 sm:p-10 flex flex-col justify-center"
+							>
+								<h3
+									class="text-xl font-bold text-foreground mb-3"
+								>
+									开启轻盈支付之旅
+								</h3>
+								<p
+									class="text-muted-foreground text-sm mb-6 leading-relaxed"
+								>
+									填写您的信息，我们的团队将为您提供专属的支付解决方案，让您的业务更加轻松自如。
+								</p>
+								<div>
+									<a
+										href="/login"
+										rel="noopener noreferrer"
+										data-slot="button"
+										class="inline-flex items-center justify-cegnter gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 py-2 has-[>svg]:px-3 rounded-full px-8 shadow-lg shadow-primary/20"
+										>立即进入<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="24"
+											height="24"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											class="lucide lucide-arrow-right ml-2 w-4 h-4"
+										>
+											<path d="M5 12h14"></path>
+											<path d="m12 5 7 7-7 7"></path></svg
+									></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<footer
+				class="py-16 px-4 sm:px-6 lg:px-8 bg-secondary/50 border-t border-border/50"
+			>
+				<div class="max-w-6xl mx-auto">
+					<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+						<div>
+							<a class="flex items-center gap-2 mb-4" href="/">
+								<div
+									class="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="lucide lucide-leaf w-4 h-4 text-primary"
+									>
+										<path
+											d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"
+										></path>
+										<path
+											d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"
+										></path>
+									</svg>
+								</div>
+								<span class="font-semibold text-foreground"
+									>{$site_name}</span
+								>
+							</a>
+							<p
+								class="text-muted-foreground text-sm leading-relaxed"
+							>
+								轻盈支付，自然流畅
+							</p>
+						</div>
+						<div>
+							<h4
+								class="font-medium text-foreground mb-4 text-sm"
+							>
+								产品
+							</h4>
+							<ul class="space-y-3">
+								<li>
+									<a
+										class="text-muted-foreground hover:text-primary transition-colors text-sm"
+										>支付进件</a
+									>
+								</li>
+								<li>
+									<a
+										class="text-muted-foreground hover:text-primary transition-colors text-sm"
+										>支付渠道</a
+									>
+								</li>
+								<li>
+									<a
+										class="text-muted-foreground hover:text-primary transition-colors text-sm"
+										>产品定价</a
+									>
+								</li>
+							</ul>
+						</div>
+						<div>
+							<h4
+								class="font-medium text-foreground mb-4 text-sm"
+							>
+								公司
+							</h4>
+							<ul class="space-y-3">
+								<li>
+									<a
+										class="text-muted-foreground hover:text-primary transition-colors text-sm"
+										>关于我们</a
+									>
+								</li>
+								<li>
+									<a
+										class="text-muted-foreground hover:text-primary transition-colors text-sm"
+										>联系我们</a
+									>
+								</li>
+								<li>
+									<a
+										class="text-muted-foreground hover:text-primary transition-colors text-sm"
+										>合规声明</a
+									>
+								</li>
+							</ul>
+						</div>
+						<div>
+							<h4
+								class="font-medium text-foreground mb-4 text-sm"
+							>
+								支持
+							</h4>
+							<ul class="space-y-3">
+								<li>
+									<a
+										class="text-muted-foreground hover:text-primary transition-colors text-sm"
+										>帮助中心</a
+									>
+								</li>
+								<li>
+									<a
+										class="text-muted-foreground hover:text-primary transition-colors text-sm"
+										>开发文档</a
+									>
+								</li>
+								<li>
+									<a
+										class="text-muted-foreground hover:text-primary transition-colors text-sm"
+										>API 接口</a
+									>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="pt-8 border-t border-border/50">
+						<div
+							class="flex flex-col sm:flex-row justify-between items-center gap-4"
+						>
+							{$footer_content|raw}
+							<p class="text-muted-foreground text-sm">
+								© 2026 {$site_name}. 保留所有权利。
+							</p>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</main>
+	</body>
+</html>

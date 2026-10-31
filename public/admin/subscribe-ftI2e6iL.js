@@ -1,0 +1,1 @@
+const t={id:"ID",name:"套餐名称",price:"套餐价格",rebate_ratio:"预存返利率",duration_day:"套餐天数",custom_domain:"自定义域名","custom_domain 0":"不支持","custom_domain 1":"支持",weigh:"权重",status:"状态","status 0":"禁用","status 1":"启用",remark:"备注",create_time:"创建时间","quick Search Fields":"ID"};export{t as default};

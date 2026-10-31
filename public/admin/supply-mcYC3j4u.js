@@ -1,0 +1,1 @@
+import{d as t}from"./index-BJfkzxoc.js";const r="/admin/supply.Upstream/",u="/admin/supply.Downstream/",n=(s,a,e)=>t({url:u+"audit",params:{id:s,type:a,reject:e}},{showSuccessMessage:!0}),c=s=>t({url:r+"queryDockingStatus",params:{id:s}},{showSuccessMessage:!0});export{n as a,c as g};

@@ -1,0 +1,1 @@
+const a={id:"ID",name:"上游名称",api:"API地址",api_id:"API  ID",api_key:"API密钥",rejected:"驳回信息",remark:"备注",api_status:"API状态",status:"状态","status 0":"禁用","status 1":"启用","quick Search Fields":"ID"};export{a as default};

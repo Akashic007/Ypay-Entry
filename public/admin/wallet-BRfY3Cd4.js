@@ -1,0 +1,1 @@
+const e={id:"id",user_id:"User",user__username:"username",money:"Total Balance",withdrawal_money:"Withdrawable",freeze_money:"Frozen",total_income:"Total Income",total_withdraw:"Total Withdrawal","quick Search Fields":"id",freeze:"Freeze",unfreeze:"Unfreeze",transfer:"Transfer to Balance",adjust:"Adjust Balance"};export{e as default};

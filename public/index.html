@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      /* 防止页面刷新时白屏的初始样式 */
+      html {
+        background-color: #fafbfc;
+      }
+
+      html.dark {
+        background-color: #070707;
+      }
+    </style>
+<script   src="https://static.geetest.com/v4/gt4.js"></script>
+    <script>
+      // 初始化 html class 主题属性
+      ;(function () {
+        try {
+          if (typeof Storage === 'undefined' || !window.localStorage) {
+            return
+          }
+
+          const themeType = localStorage.getItem('sys-theme')
+          if (themeType === 'dark') {
+            document.documentElement.classList.add('dark')
+          }
+        } catch (e) {
+          console.warn('Failed to apply initial theme:', e)
+        }
+      })()
+    </script>
+    <script type="module" crossorigin src="/assets/index-D_-bKQLd.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vue-vendor-BZl87LWp.js">
+    <link rel="modulepreload" crossorigin href="/assets/element-plus-DhjqrN-b.js">
+    <link rel="modulepreload" crossorigin href="/assets/utils-BAcj5IZg.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-BeZEmOLW.css">
+  </head>
+
+  <body>
+    <div id="app"></div>
+  </body>
+</html>

@@ -1,0 +1,1 @@
+const e={id:"ID",ec_id:"进件通道ID",ec__sp_id:"服务商ID",ec__platform_code:"平台代码","ec__platform_code wxpay":"微信支付","ec__platform_code alipay":"支付宝",subscribe_id:"代理套餐ID",subscribe__name:"套餐名称",discount:"折扣",status:"状态","status 0":"禁用","status 1":"启用",remark:"备注",create_time:"创建时间","quick Search Fields":"ID"};export{e as default};

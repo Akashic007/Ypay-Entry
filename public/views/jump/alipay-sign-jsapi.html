@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>支付宝支付</title>
+		<style>
+			:root {
+				--primary: #1677ff;
+				--primary-dark: #0958d9;
+				--bg: #f0f2f5;
+				--card: #ffffff;
+				--text: #1f1f1f;
+				--text-secondary: #8c8c8c;
+				--border: rgba(0, 0, 0, 0.06);
+				--success: #52c41a;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family:
+					-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+					"Helvetica Neue", "PingFang SC", "Microsoft YaHei",
+					sans-serif;
+				background: var(--bg);
+				min-height: 100vh;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 20px;
+				overflow: hidden;
+			}
+
+			.bg-decoration {
+				position: fixed;
+				top: -120px;
+				left: -60px;
+				width: 360px;
+				height: 360px;
+				border-radius: 50%;
+				background: linear-gradient(
+					135deg,
+					rgba(22, 119, 255, 0.12),
+					rgba(22, 119, 255, 0.03)
+				);
+				pointer-events: none;
+			}
+
+			.bg-decoration-2 {
+				position: fixed;
+				bottom: -80px;
+				right: -80px;
+				width: 280px;
+				height: 280px;
+				border-radius: 50%;
+				background: linear-gradient(
+					135deg,
+					rgba(22, 119, 255, 0.06),
+					rgba(82, 196, 26, 0.06)
+				);
+				pointer-events: none;
+			}
+
+			.card {
+				position: relative;
+				width: 100%;
+				max-width: 400px;
+				background: var(--card);
+				border-radius: 20px;
+				box-shadow:
+					0 8px 40px rgba(0, 0, 0, 0.08),
+					0 1px 3px rgba(0, 0, 0, 0.04);
+				overflow: hidden;
+				animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+			}
+
+			@keyframes slideUp {
+				from {
+					opacity: 0;
+					transform: translateY(30px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			.card-header {
+				background: linear-gradient(135deg, var(--primary), #4096ff);
+				padding: 28px 24px 22px;
+				color: #fff;
+				text-align: center;
+			}
+
+			.card-header .icon {
+				width: 48px;
+				height: 48px;
+				background: rgba(255, 255, 255, 0.2);
+				border-radius: 14px;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				margin-bottom: 12px;
+				backdrop-filter: blur(10px);
+			}
+
+			.card-header .icon svg {
+				width: 26px;
+				height: 26px;
+				fill: #fff;
+			}
+
+			.card-header h1 {
+				font-size: 18px;
+				font-weight: 600;
+				letter-spacing: 0.5px;
+			}
+
+			.card-body {
+				padding: 24px;
+			}
+
+			.order-info {
+				background: #fafafa;
+				border-radius: 12px;
+				padding: 18px;
+				margin-bottom: 20px;
+			}
+
+			.order-row {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 8px 0;
+			}
+
+			.order-row + .order-row {
+				border-top: 1px solid var(--border);
+			}
+
+			.order-label {
+				font-size: 13px;
+				color: var(--text-secondary);
+				flex-shrink: 0;
+			}
+
+			.order-value {
+				font-size: 13px;
+				color: var(--text);
+				font-weight: 500;
+				text-align: right;
+				word-break: break-all;
+				margin-left: 12px;
+			}
+
+			.amount-section {
+				text-align: center;
+				padding: 16px 0 20px;
+			}
+
+			.amount-label {
+				font-size: 13px;
+				color: var(--text-secondary);
+				margin-bottom: 6px;
+			}
+
+			.amount-value {
+				font-size: 36px;
+				font-weight: 700;
+				color: var(--text);
+				letter-spacing: -1px;
+			}
+
+			.amount-value .currency {
+				font-size: 18px;
+				font-weight: 600;
+				margin-right: 2px;
+				vertical-align: top;
+				line-height: 2.4;
+			}
+
+			.countdown-section {
+				text-align: center;
+				margin-bottom: 16px;
+			}
+
+			.countdown-text {
+				font-size: 13px;
+				color: var(--text-secondary);
+			}
+
+			.countdown-text .count {
+				color: var(--primary);
+				font-weight: 600;
+				font-variant-numeric: tabular-nums;
+			}
+
+			.progress-bar {
+				width: 100%;
+				height: 3px;
+				background: #f0f0f0;
+				border-radius: 3px;
+				overflow: hidden;
+				margin-top: 8px;
+			}
+
+			.progress-fill {
+				height: 100%;
+				background: linear-gradient(90deg, var(--primary), #4096ff);
+				border-radius: 3px;
+				transition: width 1s linear;
+			}
+
+			.btn-pay {
+				width: 100%;
+				padding: 14px;
+				background: linear-gradient(135deg, var(--primary), #4096ff);
+				color: #fff;
+				border: none;
+				border-radius: 12px;
+				font-size: 16px;
+				font-weight: 600;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				letter-spacing: 0.5px;
+				position: relative;
+				overflow: hidden;
+			}
+
+			.btn-pay:active {
+				transform: scale(0.98);
+			}
+
+			.btn-pay::after {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: -100%;
+				width: 100%;
+				height: 100%;
+				background: linear-gradient(
+					90deg,
+					transparent,
+					rgba(255, 255, 255, 0.15),
+					transparent
+				);
+				animation: shimmer 2s infinite;
+			}
+
+			@keyframes shimmer {
+				to {
+					left: 100%;
+				}
+			}
+
+			.footer-tip {
+				text-align: center;
+				margin-top: 16px;
+				font-size: 12px;
+				color: #bfbfbf;
+			}
+
+			.status-jumping {
+				display: none;
+				text-align: center;
+				padding: 10px 0;
+			}
+
+			.status-jumping .dot-loader {
+				display: inline-flex;
+				gap: 4px;
+			}
+
+			.status-jumping .dot {
+				width: 6px;
+				height: 6px;
+				background: var(--primary);
+				border-radius: 50%;
+				animation: dotBounce 1.4s ease-in-out infinite;
+			}
+
+			.status-jumping .dot:nth-child(2) {
+				animation-delay: 0.16s;
+			}
+			.status-jumping .dot:nth-child(3) {
+				animation-delay: 0.32s;
+			}
+
+			@keyframes dotBounce {
+				0%,
+				80%,
+				100% {
+					transform: scale(0.6);
+					opacity: 0.4;
+				}
+				40% {
+					transform: scale(1);
+					opacity: 1;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="bg-decoration"></div>
+		<div class="bg-decoration-2"></div>
+
+		<div class="card">
+			<div class="card-header">
+				<div class="icon">
+					<svg
+						viewBox="0 0 1024 1024"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<path
+							d="M789.2 325.8H573.6V186.4c0-22-17.8-39.8-39.8-39.8h-43.6c-22 0-39.8 17.8-39.8 39.8v139.4H234.8c-22 0-39.8 17.8-39.8 39.8v43.6c0 22 17.8 39.8 39.8 39.8h160.4l0.4 62.6H274.4c-22 0-39.8 17.8-39.8 39.8v43.6c0 22 17.8 39.8 39.8 39.8h121.2v147.6c0 22 17.8 39.8 39.8 39.8h43.6c22 0 39.8-17.8 39.8-39.8V595.4H640c22 0 39.8-17.8 39.8-39.8v-43.6c0-22-17.8-39.8-39.8-39.8H518.4l0.4-62.6h270.4c22 0 39.8-17.8 39.8-39.8v-43.6c0-22.2-17.8-40-39.8-40z"
+						/>
+					</svg>
+				</div>
+				<h1>支付宝安全支付</h1>
+			</div>
+
+			<div class="card-body">
+				<div class="amount-section">
+					<div class="amount-label">支付金额</div>
+					<div class="amount-value">
+						<span class="currency">¥</span>{$amount}
+					</div>
+				</div>
+
+				<div class="order-info">
+					<div class="order-row">
+						<span class="order-label">商品名称</span>
+						<span class="order-value">{$subject}</span>
+					</div>
+					<div class="order-row">
+						<span class="order-label">商户订单号</span>
+						<span class="order-value">{$out_trade_no}</span>
+					</div>
+					<!-- <div class="order-row">
+						<span class="order-label">跳转链接</span>
+						<span class="order-value">{$url}</span>
+					</div> -->
+				</div>
+
+				<div class="countdown-section" id="countdownSection">
+					<div class="countdown-text">
+						<span id="countdownNum" class="count">3</span>
+						<span> 秒后自动跳转支付</span>
+					</div>
+					<div class="progress-bar">
+						<div
+							class="progress-fill"
+							id="progressFill"
+							style="width: 100%"
+						></div>
+					</div>
+				</div>
+
+				<div class="status-jumping" id="statusJumping">
+					<div class="countdown-text" style="margin-bottom: 6px">
+						正在跳转支付宝
+					</div>
+					<div class="dot-loader">
+						<div class="dot"></div>
+						<div class="dot"></div>
+						<div class="dot"></div>
+					</div>
+				</div>
+
+				<a id="jumpLink" href="{$url}" style="display: none"></a>
+				<button class="btn-pay" id="btnPay" onclick="goToPay()">
+					立即支付
+				</button>
+
+				<div class="footer-tip">支付环境安全 · 资金由支付宝保障</div>
+			</div>
+		</div>
+
+		<script>
+			var countdown = 3;
+			var timer = null;
+
+			function goToPay() {
+				document.getElementById("countdownSection").style.display =
+					"none";
+				document.getElementById("statusJumping").style.display =
+					"block";
+				document.getElementById("btnPay").disabled = true;
+				document.getElementById("btnPay").style.opacity = "0.6";
+				document.getElementById("btnPay").innerText = "正在跳转...";
+
+				clearInterval(timer);
+				document.getElementById("jumpLink").click();
+			}
+
+			function startCountdown() {
+				var fill = document.getElementById("progressFill");
+				var numEl = document.getElementById("countdownNum");
+
+				fill.style.width = ((countdown - 1) / 3) * 100 + "%";
+				countdown--;
+
+				timer = setInterval(function () {
+					numEl.innerText = countdown;
+					fill.style.width = ((countdown - 1) / 3) * 100 + "%";
+
+					if (countdown <= 0) {
+						clearInterval(timer);
+						goToPay();
+						return;
+					}
+					countdown--;
+				}, 1000);
+			}
+
+			window.onload = function () {
+				startCountdown();
+			};
+		</script>
+	</body>
+</html>

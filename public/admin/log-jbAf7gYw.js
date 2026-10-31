@@ -1,0 +1,1 @@
+const e={id:"id",event:"event",notify_type:"notify_type",driver:"driver",target:"target",biz_id:"biz_id",biz_type:"biz_type",title:"title",content:"content",status:"status",error_msg:"error_msg",response:"response",create_time:"create_time",update_time:"update_time",send_time:"send_time","quick Search Fields":"id"};export{e as default};

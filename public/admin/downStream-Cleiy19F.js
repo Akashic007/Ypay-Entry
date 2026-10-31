@@ -1,0 +1,1 @@
+const t={id:"ID",agent_id:"代理ID",agent__api_id:"接口ID",domain:"下游域名",rejected:"驳回信息",status:"状态","status 0":"禁用","status 1":"启用",remark:"备注",create_time:"创建时间",update_time:"修改时间","quick Search Fields":"ID"};export{t as default};

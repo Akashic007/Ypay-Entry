@@ -1,0 +1,1 @@
+const e={id:"id",agent_id:"agent_id",agent__id:"id",user_id:"user_id",user__username:"username",me_id:"me_id",me__business_id:"business_id",price:"price",create_time:"create_time","quick Search Fields":"id"};export{e as default};

@@ -1,0 +1,1 @@
+const t={id:"id",name:"name",title:"title",content:"content",status:"status","status 0":"status 0","status 1":"status 1",remark:"remark",update_time:"update_time",create_time:"create_time","quick Search Fields":"id/name/title","Content tips":"Use {'{'}varName{'}'} to set the variable","Name tips":"You can send messages using the template ID or name"};export{t as default};

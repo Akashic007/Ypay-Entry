@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安全支付</title>
+    <!-- 依 赖 样 式-->
+    <script src="https://s4.zstatic.net/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- 页面独立样式 -->
+    <link rel="stylesheet" href="/views/pay-template/official/css/core.css" class="template-customizer-core-css"/>
+    <link rel="stylesheet" href="/views/pay-template/console/css/core.css" class="template-customizer-core-css"/>
+    <link rel="stylesheet" href="/views/pay-template/console/css/theme-default.css"
+          class="template-customizer-theme-css"/>
+    <link rel="stylesheet" href="/views/pay-template/console/js/sweetalert2/sweetalert2.css"/>
+    <!-- 界面独立样式 -->
+    <link rel="stylesheet" href="/views/pay-template/simple/css/index.css"/>
+    <style>
+        html body {
+            background: white !important;
+        }
+
+        #startApp {
+            display: none;
+        }
+
+        .iframebox {
+            height: 210px;
+            width: 200px;
+        }
+
+        @media (max-width: 768px) {
+            #startApp {
+                display: block;
+            }
+
+            .iframebox {
+                width: 200px;
+                height: 210px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+<div id="main" style="padding-bottom:68px">
+    <div class="contain">
+    </div>
+    <div class="containsection">
+        <div class="box">
+            <div class="box-left card-box">
+                <div class="box-item-left">
+                    <div class="title">
+                        扫码支付
+                    </div>
+                    <div class="subtitle">
+                        使用支持
+                        {if $order.type == 'wxpay'}
+                        <span>微信</span>
+                        {/if}
+                        {if $order.type == 'alipay'}
+                        <span>支付宝</span>
+                        {/if}
+                        {if $order.type == 'qqpay'}
+                        <span>QQ</span>
+                        {/if}
+                        的钱包App扫描二维码
+                    </div>
+                    <div class="channel-list">
+                        {if $order.type == 'wxpay'}
+                        <img src="/views/pay-template/simple/images/weixin.jpg" style="height: 48px;" alt=""/>
+                        {/if}
+                        {if $order.type == 'alipay'}
+                        <svg t="1732816658540" viewBox="0 0 2902 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                             p-id="1607" width="150" height="48">
+                            <path
+                                    d="M351.318 553.48c-24.058 2.379-69.213 13.007-93.905 34.774-74.024 64.33-29.733 181.992 120.042 181.992 87.048 0 174.061-55.518 242.393-144.364-97.183-47.304-179.561-81.161-268.53-72.402zM909.985 634.782c138.636 46.3 170.078 48.786 170.078 48.786v-497.775c0-84.951-68.965-153.793-154.163-153.793h-654.354c-85.214 0-154.215 68.843-154.215 153.793v652.432c0 84.916 69 153.775 154.216 153.775h654.352c85.198 0 154.163-68.843 154.163-153.775v-6.293s-250.412-104.091-376.869-164.72c-84.792 104.021-194.206 167.188-307.78 167.188-192.091 0-257.32-167.611-166.377-277.959 19.846-24.022 53.579-47.004 105.942-59.888 81.885-20.058 212.255 12.531 334.412 52.733 21.96-40.378 40.448-84.81 54.231-132.15h-376.499v-38.034h194.119v-68.154h-235.114v-38.052h235.114v-97.237s0-16.39 16.656-16.39h94.873v113.626h232.47v38.052h-232.47v68.154h189.766c-18.154 74.166-45.754 142.443-80.351 202.385 57.579 20.762 109.291 40.448 147.801 53.297zM2450.384 182.498h275.598v54.548h98.416v-64.63c-0.035-0.159-0.035-0.212-0.035-0.388 0-14.522-11.386-26.278-25.485-26.525h-159.292v-50.865h-102.998v50.865h-184.619v91.543h98.416v-54.549zM1854.141 99.344l-100.918 238.656h77.408v284.004h84.652v-376.71h-30.649l63.766-145.95h-94.256zM2835.696 608.962l-30.931-104.443c-2.027-6.663-8.091-11.492-15.246-11.51h-81.938l23.74 80.228h-96.337v-155.381h189.202v-37.012h-189.202v-73.125h189.202v-36.994h-472.219v36.994h189.184v73.125h-189.184v37.012h189.184v155.38h-189.184v37.012h483.727l-0.388-1.269h0.388v-0.018zM2070.625 294.978c-3.225-6.556-9.8-11.086-17.413-11.138h-73.284l57.069 179.771h86.713l-53.085-168.633zM2256.143 103.679h-87.982v91.931h-216.836v36.994h216.836v330.481c-0.757 7.543-6.715 13.465-14.205 13.852h-44.696v38.299h114.014c18.030-0.758 32.482-15.739 32.87-34.28v-348.353h35.725v-36.994h-35.725v-91.931zM1707.186 271.15h-169.003v-60.559h195.952v-37.717h-195.952v-76.738l-87.366 0.018c-9.57 0-17.307 8.002-17.307 17.906v58.814h-194.577v37.717h194.577v60.559h-164.227v37.699h327.114s-18.118 70.763-107.845 146.831c-80.386-60.858-107.264-109.326-107.264-109.326h-87.753c35.496 61.528 85.956 110.807 140.274 149.898-49.895 32.43-114.613 63.697-198.295 88.687v45.172s129.101-24.357 253.866-97.87c124.959 72.932 250.465 97.87 250.465 97.87v-42.758c-80.316-29.24-143.959-61.387-193.943-92.423 72.42-53.597 135.851-126.405 161.284-223.781zM1429.826 874.249l14.611 44.115h40.959l-80.668-219.040h-31.319l-80.369 219.040h40.978l15.245-44.115h80.563zM1390.206 755.776l30.297 90.837h-61.688l31.39-90.837zM1614.639 699.324v219.040h132.608v-29.822h-93.217v-189.217h-39.391zM1891.769 699.324h39.427v219.023h-39.427v-219.023zM2176.038 699.324h-85.127v219.040h39.391v-84.193h45.737c42.475 0 72.155-27.724 72.155-67.415s-29.679-67.432-72.155-67.432zM2173.835 804.068h-43.533v-74.94h43.534c21.854 0 34.914 19.122 34.914 37.628 0 18.083-12.232 37.312-34.914 37.312zM2479.554 874.249l14.611 44.115h40.959l-80.686-219.040h-31.301l-80.367 219.040h40.995l15.21-44.115h80.58zM2439.933 755.776l30.297 90.837h-61.687l31.39-90.837zM2754.586 699.324l-42.985 93.323-43.622-93.323h-42.581l66.322 129.066v89.975h39.11v-89.974l0.247-0.494 66.093-128.572h-42.581z"
+                                    fill="#25ABEE" p-id="1608"></path>
+                        </svg>
+                        {/if}
+                        {if $order.type == 'qqpay'}
+                        <img src="/views/pay-template/simple/images/qqpay.jpg" style="height: 48px;" alt=""/>
+                        {/if}
+                        <!--                  -->
+                        <!--                  -->
+
+                    </div>
+                </div>
+                <div class="box-item-right">
+
+                    <div class="qrcode">
+                        <div class="qrcode-img">
+                            {if $order.code == 'alipay_pc'}
+                            <div style="display: flex;
+    justify-content: center;
+    align-items: center;">
+                                <iframe class="iframebox" srcdoc="{$order.qrcode}" frameborder="0"></iframe>
+                            </div>
+                            {/if}
+                            {if $order.code != 'alipay_pc'}
+                            <div id="qrcode">
+                                <img style="width: 210px; height: 210px;"
+                                     src="/views/pay-template/simple/images/loading.gif"/>
+                            </div>
+                            {/if}
+
+                        </div>
+                        <div class="qrcode-tip">
+                            此二维码只能扫描一次
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="box-right card-box">
+            <div class="title">
+          <span>
+            订单详情
+          </span>
+            </div>
+            <ul>
+                <li>
+                    <div>
+                        订单名称
+                    </div>
+                    <div>
+                        {$order.name}
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        订单号
+                    </div>
+                    <div>
+                        {$order.order_no}
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        订单金额
+                    </div>
+                    <div>
+                        ￥ {$order.pay_money}
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        有效时间
+                    </div>
+                    <div id="divTime">
+                        加载中
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<div class="filed-box card-box" style="padding:5px  20px">
+    <div style="display: flex;justify-content: space-between;align-items: center">
+        <div>
+            <div class="total-pay1">支付金额</div>
+            <div class="order-total-currency1">
+                ￥ {$order.pay_money}
+            </div>
+        </div>
+        <div>
+            <div>
+
+                {if $order.type == 'alipay'}
+                <a id="startApp" type="button" class="layui-btn-wx"
+                   style="color:white;background-color:#1e9fff;font-size:13px;"><span>启动支付宝</span></a>
+                {/if}
+                {if $order.type == 'wxpay'}
+                <a id="startApp" type="button" class="layui-btn-wx"
+                   style="color:white;background-color:#16b777;font-size:13px"><span
+                        class="layui-btn-wx">启动微信</span></a>
+                {/if}
+                {if $order.type == 'qqpay'}
+                <a id="startApp" class="layui-btn-wx"
+                   style="font-size:12px;color:red;font-weight:900"><span>启动QQ</span></a>
+                {/if}
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{if $order.pay_proclamation_open == '1'}
+<div class="web_notice"
+     style="position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0,0,0,0.3);z-index: 99999;">
+    <div
+            style="position: fixed;top: 50%;left: 50%;width: 350px;background: #FFF;transform: translate(-50%, -50%);border-radius: 40px;padding: 50px 40px;">
+        {if $order.type == 'qqpay'}
+        <h3 style="font-weight: bold;text-align: center;font-size: 30px;">QQ支付注意</h3>
+        {/if}
+        {if $order.type == 'alipay'}
+        <h3 style="font-weight: bold;text-align: center;font-size: 30px;">支付宝支付注意</h3>
+        {/if}
+        {if $order.type == 'wxpay'}
+        <h3 style="font-weight: bold;text-align: center;font-size: 30px;">微信支付注意</h3>
+        {/if}
+
+        <div class="htmlpay_proclamation" style="margin-top: 26px">
+            <?php
+    if($order['pay_proclamation_open'] == '1'){
+        echo $order['pay_proclamation']; // 不转义，直接输出HTML
+    }
+    ?>
+        </div>
+        <font color="purple">
+            <a style="display: block;background: #98a3ff;color: #FFF;text-align: center;font-weight: bold;font-size: 19px;line-height: 60px;margin: 0 auto;margin-top: 45px;border-radius: 32px;width: 80%;"
+               onclick="javascript:document.querySelector('.web_notice').remove()">懂了</a>
+        </font>
+    </div>
+</div>
+{/if}
+</body>
+<!-- 弹窗开始 -->
+
+<script src="/views/pay-template/simple/js/sweetalert2/sweetalert2.js"></script>
+<script type="text/javascript" src="/views/pay-template/simple/js/clipboard/clipboard.js"></script>
+<script type="text/javascript">
+    if ('{$order.voice}' == '1' && 'speechSynthesis' in window) {
+        try {
+            const synth = window.speechSynthesis;
+            // 检查是否有可用的语音合成引擎
+            if (synth.getVoices().length > 0 || typeof synth.speak === 'function') {
+                const utterance = new SpeechSynthesisUtterance('{$order.voice_content}');
+                synth.speak(utterance);
+            }
+        } catch (e) {
+            // 发生任何错误时静默失败
+            console.log('语音播放不支持或失败:', e);
+        }
+    }
+    var intDiff = parseInt('{$order.expire_time}');//倒计时总秒数量
+    console.log(intDiff)
+
+    function timer(intDiff) {
+        var timerId = window.setInterval(function () {
+            var day = 0,
+                hour = 0,
+                minute = 0,
+                second = 0;//时间默认值
+            if (intDiff > 0) {
+                day = Math.floor(intDiff / (60 * 60 * 24));
+                hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+                minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+                second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+            }
+            if (minute <= 9) minute = '0' + minute;
+            if (second <= 9) second = '0' + second;
+            if (hour <= 0 && minute <= 0 && second <= 0) {
+                $("#divTime").html("<small style='color:red; font-size:26px'>订单二维码已过期</small>");
+                $("#qrcode").html('<img id="qrcode_load" src="/views/pay-template/simple/images/qrcode_timeout.png">');//输出过期二维码提示图片
+            } else {
+                $("#divTime").html("<small style='color:red; font-size:26px'>" + minute + "</small>分<small style='color:red; font-size:26px'>" + second + "</small>");
+            }
+            if (intDiff < 0) {
+                clearInterval(timerId);
+            }
+            intDiff--
+        }, 1000);
+    }
+
+
+    /**
+     * 检验是否手机版，手机版直接跳转到APP支付
+     * @returns
+     */
+
+    order();
+    updateQrOk = 0;
+    updateQrImg = 0;
+    updateQrNo = 0;
+    lastQrImg = '';
+    var h5_url = ''
+
+    //订单监控  {订单监控}
+    function order() {
+
+        $.ajax({
+            url: "/payment/polling",
+            type: "GET",
+            data: {order_no: "{$order.order_no}"},
+            headers: {
+                "server": "1"
+            },
+            success: function (result) {
+                if (result.code == '1' && updateQrOk == 0) {
+                    updateQrOk == 1;
+                    $("#divTime").html("<small style='color:red; font-size:22px'>" + result.msg + "</small>");
+                    $("#qrcode").html('<img id="qrcode_load" src="/views/pay-template/newpay/images/pay_ok.png">');//支付成功
+                    //回调页面
+                    window.clearInterval(orderlst);
+                    // layer.msg('支付成功，正在跳转中...');
+                    window.location.href = result.data.url;
+                }
+                //支付二维码
+                if (result.code == '2' && (updateQrImg == 0 || (result.data.qr_url && lastQrImg !== result.data.qr_url))) {
+                    updateQrImg = 1;
+                    lastQrImg = result.data.qr_url;
+                    h5_url = result.data.h5_url
+                    $("#qrcode").html('<img style="width:100%;height100%" id="qrcode_load"  src="' + result.data.qr_url + '">');
+                    timer(result.data.expire_time);
+                    //二维码获取成功
+                    if ("{$order.pay_info.h5_url}" != null) {
+                        if ("{$order.type}" == 'alipay') {
+                            if (isMobilCheck()) {
+                                $("#startApp").attr("href", "{$order.pay_info.h5_url|raw}");
+                                $("#startApp").show();
+                                $("#startApp_text").show();
+
+                            }
+                        }
+                        if ("{$order.type}" == 'wxpay') {
+                            if (isMobilCheck()) {
+                                $("#startApp").attr("href", "{$order.pay_info.h5_url|raw}");
+                                $("#startApp").show();
+                                $("#startApp_text").show();
+
+                            }
+
+                        }
+                        if ("{$order.type}" == 'qqpay') {
+                            if (isMobilCheck()) {
+                                if ('{$order.code}' == 'qqpay_software') {
+                                    $("#startApp").attr("href", "{$order.pay_info.h5_url|raw}");
+                                    $("#startApp").show();
+                                    $("#startApp_text").show();
+                                    // var url_scheme = result.data.h5_qrurl;
+                                    // layer.msg('正在自动唤醒QQ...', { shade: 0, time: 1000 });
+                                    window.location.href = url_scheme;
+                                } else {
+                                    // $("#startApp").attr("href", "{$order.h5_qrurl|raw}");
+                                    // $("#startApp").show();
+                                    // $("#startApp_text").show();
+
+                                }
+                            }
+
+                        }
+                    }
+
+
+                }
+                //订单已经超时
+                if (result.code == '0' && updateQrNo == 0) {
+                    updateQrNo == 1;
+                    $("#divTime").html("<small style='color:red; font-size:22px'>" + result.msg + "</small>");
+                    window.clearInterval(orderlst);
+                    Swal.fire({
+                        title: '支付失败',
+                        text: result.msg,
+                        icon: 'error',
+                        customClass: {
+                            confirmButton: 'btn btn-primary'
+                        },
+                        buttonsStyling: false
+                    }).then(function (result1) {
+
+                        var href = result.data.url;//获取跳转链接
+                        if (href && href.indexOf('http') !== 0 && href != '/') {
+                            href = "//" + href;
+                        }
+                        // 执行跳转
+                        window.location.href = result.data.url;
+                    });
+                }
+            }
+        })
+    }
+
+    // 自动跳转的方法
+    // function jscode() {
+    //     if ("{$order.pay_info.h5_url}" != null && "{$order.pay_info.h5_url}" != undefined) {
+    //         var type = '{$order.type}';//支付方式
+    //         var pay_code = '{$order.channel.channel_type}'; //获取通道类型
+    //         if (type == 'alipay' && pay_code != 'alipay_software') {
+    //             // layer.msg('正在自动唤醒支付宝...', { shade: 0, time: 1000 });
+    //             window.location.href = "{$order.pay_info.h5_url|raw}";
+    //         } else if (type == 'qqpay' && pay_code != 'qqpay_software' && pay_code != 'qqpay_wzq') {
+    //             var url_scheme = "{$order.pay_info.h5_url|raw}";
+    //             // layer.msg('正在自动唤醒QQ...', { shade: 0, time: 1000 });
+    //             // window.location.href = url_scheme;
+    //         } else if (type == 'wxpay' && pay_code != 'wxpay_software') {
+    //             "{if isset($order['pay_info']['wx_url'])}"
+    //             window.location.href = "{$order.pay_info.wx_url|raw}";
+    //             "{else /}"
+    //             window.location.href = "{$order.pay_info.h5_url|raw}";
+    //             "{/if}"
+    //         }
+    //     }
+    //
+    // }
+
+
+    var isWeixin = is_weixin();
+
+    function jscode() {
+        if ("{$order.pay_info.h5_url}" != null && "{$order.pay_info.h5_url}" != undefined) {
+            var type = '{$order.type}';//支付方式
+            var pay_code = '{$order.channel.channel_type}'; //获取通道类型
+            if (type == 'alipay' && pay_code == 'alipay_personal_not_hang') {
+                // layer.msg('正在自动唤醒支付宝...', { shade: 0, time: 1000 });
+                window.location.href = "{$order.pay_info.h5_url|raw}";
+            } else if (type == 'wxpay' && pay_code == 'wxpay_official_special' && isWeixin) {
+                "{if isset($order['pay_info']['wx_url'])}"
+                window.location.href = "{$order.pay_info.wx_url|raw}";
+                "{else /}"
+                window.location.href = "{$order.pay_info.h5_url|raw}";
+                "{/if}"
+            }
+        }
+    }
+
+
+    if (window.navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) {
+             if ('{$order.type}' == 'alipay' && !isWeixin && '{$order.channel.channel_type}' != 'alipay_software') {
+            setTimeout(jscode(), 3000)
+        } else if ('{$order.type}' == 'wxpay' && isWeixin && '{$order.channel.channel_type}' != 'wxpay_software') {
+            setTimeout(jscode(), 3000)
+        } else if (!isWeixin) {
+            setTimeout(jscode(), 3000)
+        }
+
+
+    }
+
+    function is_weixin() {
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == "micromessenger" || ua.match(/QQ/i) == "qq") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    var pay_code = '{$order.code}'; //获取通道类型
+    var isQQBrowser = navigator.userAgent.indexOf("QQBrowser") > -1;
+    if (isWeixin && '{$order.type}' == 'alipay') {
+        $("html").html(`      <style >
+  body,html{width:100%;height:100%}
+  *{margin:0;padding:0}
+  body{background-color:#fff}
+  #browser img{
+      width:50px;
+  }
+  #browser{
+      margin: 0px 10px;
+      text-align:center;
+  }
+  #contens{
+      font-weight: bold;
+      margin:-285px 0px 10px;
+      text-align:center;
+      font-size:20px;
+      margin-bottom: 125px;
+  }
+  .top-bar-guidance{font-size:15px;color:#fff;height:70%;line-height:1.8;padding-left:20px;padding-top:20px;background:url(//gw.alicdn.com/tfs/TB1eSZaNFXXXXb.XXXXXXXXXXXX-750-234.png) center top/contain no-repeat}
+  .top-bar-guidance .icon-safari{width:25px;height:25px;vertical-align:middle;margin:0 .2em}
+  .app-download-tip{margin:0 auto;width:290px;text-align:center;font-size:15px;color:#2466f4;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAcAQMAAACak0ePAAAABlBMVEUAAAAdYfh+GakkAAAAAXRSTlMAQObYZgAAAA5JREFUCNdjwA8acEkAAAy4AIE4hQq/AAAAAElFTkSuQmCC) left center/auto 15px repeat-x}
+  .app-download-tip .guidance-desc{background-color:#fff;padding:0 5px}
+  .app-download-btn{display:block;width:214px;height:40px;line-height:40px;margin:18px auto 0 auto;text-align:center;font-size:18px;color:#2466f4;border-radius:20px;border:.5px #2466f4 solid;text-decoration:none}
+  </style>  <div style="width: 100vw;height: 100vh;">
+      <div class="top-bar-guidance">
+        <p>点击右上角<img src="//gw.alicdn.com/tfs/TB1xwiUNpXXXXaIXXXXXXXXXXXX-55-55.png" class="icon-safari"> <span id="openm">Safari打开</span></p>
+        <p>可以继续浏览本站哦~</p>
+      </div>
+      <a style="display: none;" :href="vurl" id="vurl" rel="noreferrer"></a>
+      <div id="contens">
+        1.防止腾讯屏蔽本站链接<br /><br />
+        2.建议用手机浏览器打开效果最佳<br /><br />
+      </div>
+
+  
+      <div class="app-download-tip">
+    <span class="guidance-desc">点击右上角>进入浏览器打开</span>
+</div>
+    </div>
+`);
+    }
+
+    /**
+     * 检验是否手机版，手机版直接跳转到APP支付
+     * @returns
+     */
+    function isMobilCheck() {
+        var userAgentInfo = navigator.userAgent;
+
+        var mobileAgents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
+
+        var mobile_flag = false;
+
+        //根据userAgent判断是否是手机
+        for (var v = 0; v < mobileAgents.length; v++) {
+            if (userAgentInfo.indexOf(mobileAgents[v]) > 0) {
+                mobile_flag = true;
+                break;
+            }
+        }
+        var screen_width = window.screen.width;
+        var screen_height = window.screen.height;
+
+        //根据屏幕分辨率判断是否是手机
+        if (screen_width > 325 && screen_height < 750) {
+            mobile_flag = true;
+        }
+
+        return mobile_flag;
+    }
+
+
+    //周期监听
+    orderlst = window.setInterval(function () {
+        order();
+    }, 1000);
+
+    function showGlobalAd() {
+
+    }
+</script>
+<script src="https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.1/alipayjsapi.inc.min.js"></script>
+
+</html>

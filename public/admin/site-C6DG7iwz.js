@@ -1,0 +1,1 @@
+const e={id:"ID",user_id:"用户ID",user__username:"用户名",subscribe_id:"套餐ID",subscribe__name:"套餐名称",expire_time:"到期时间",name:"分站名称",domain:"自定义域名",domain_id:"预设域名",domain_prefix:"二级域名前缀",logo:"LOGO",ico:"图标",site_info:"站点信息",status:"状态","status 0":"禁用","status 1":"启用",remark:"备注",create_time:"创建时间",update_time:"修改时间","quick Search Fields":"ID"};export{e as default};

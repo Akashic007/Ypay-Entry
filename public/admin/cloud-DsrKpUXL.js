@@ -1,0 +1,1 @@
+const e={id:"ID",platform_code:"平台类型","platform_code wxpay":"微信","platform_code qqpay":"QQ","platform_code alipay":"支付宝",type:"云端类型",name:"名称",device_type:"设备类型",address:"云端地址",proxy:"云端代理","proxy close":"关闭","proxy open":"开启",proxy_config:"云端代理配置",remark:"备注",weigh:"权重",status:"状态","status 0":"禁用","status 1":"启用","quick Search Fields":"ID"};export{e as default};

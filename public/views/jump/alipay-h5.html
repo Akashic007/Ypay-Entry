@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<title>正在跳转支付宝</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<style>
+			body {
+				margin: 0;
+				padding: 0;
+				background: #f5f5f5;
+				font-family:
+					-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+				text-align: center;
+			}
+			.box {
+				background: #fff;
+				padding: 30px;
+				border-radius: 10px;
+				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+			}
+			.btn {
+				display: inline-block;
+				margin-top: 20px;
+				padding: 12px 20px;
+				background: #1677ff;
+				color: #fff;
+				border-radius: 6px;
+				text-decoration: none;
+				font-size: 16px;
+			}
+		</style>
+	</head>
+	<body>
+
+		<div class="box">
+			<h2>正在跳转支付宝支付</h2>
+			<p>如果没有自动跳转，请点击下方按钮</p>
+			<a href="{$url}" class="btn">立即前往支付</a>
+		</div>
+
+		<script>
+			// 自动跳转
+			// setTimeout(function () {
+			// 	window.location.href = "{$url}";
+			// }, 1000);
+		</script>
+	</body>
+</html>

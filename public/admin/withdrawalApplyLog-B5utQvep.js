@@ -1,0 +1,1 @@
+const e={id:"ID",user_id:"用户ID",user__username:"用户名",agent_id:"代理ID",agent__user_id:"用户ID",agent__api_id:"接口ID",withdraw_no:"提现单号",apply_amount:"申请金额",fee_amount:"手续费",final_amount:"最终金额",amount_detail:"提现金额",status:"状态",rejected:"驳回消息",remark:"备注",create_time:"创建时间",pay_time:"打款时间","quick Search Fields":"ID"};export{e as default};

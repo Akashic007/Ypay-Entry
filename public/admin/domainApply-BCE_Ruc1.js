@@ -1,0 +1,1 @@
+const e={id:"ID",user_id:"User ID",user__username:"Username",site_id:"Site ID",site__name:"Site name",domain:"Domain",status:"Status",reason:"Audit note",remark:"User remark",create_time:"Created at",update_time:"Updated at","quick Search Fields":"ID / domain"};export{e as default};

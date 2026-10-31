@@ -1,0 +1,1 @@
+const t={id:"id",sp_id:"sp_id",sp__name:"name",platform_code:"platform_code","platform_code wxpay":"platform_code wxpay","platform_code alipay":"platform_code alipay",config:"config",status:"status","status 0":"status 0","status 1":"status 1",create_time:"create_time",update_time:"update_time","quick Search Fields":"id"};export{t as default};

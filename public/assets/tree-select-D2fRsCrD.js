@@ -1,0 +1,1 @@
+const n={xs:{threshold:12,fallback:24},sm:{threshold:12,fallback:12},md:{threshold:8,fallback:8},lg:null,xl:null};function r(l,o,a){const c=l!=null?l:o,s=n[a];return s?c>=s.threshold?c:s.fallback:c}export{r as c};

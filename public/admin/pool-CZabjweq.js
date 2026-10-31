@@ -1,0 +1,1 @@
+const e={id:"id",name:"name",user_id:"user_id",user__username:"username",pay_type:"pay_type",channel_mode:"channel_mode",status:"status","status 0":"status 0","status 1":"status 1",remark:"remark",weigh:"weigh","quick Search Fields":"id"};export{e as default};

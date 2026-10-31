@@ -1,0 +1,1 @@
+const e={id:"ID",user_id:"用户ID",user__username:"用户名",site_id:"分站ID",site__name:"分站名称",money:"变更余额",before:"变更前余额",after:"变更后余额",type:"日志类型",content:"相关内容",remark:"备注",create_time:"创建时间","quick Search Fields":"ID"};export{e as default};

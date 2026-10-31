@@ -1,0 +1,1 @@
+const e={id:"ID",user_id:"用户ID",user__username:"用户名",agent_id:"代理ID",agent__api_id:"接口ID",money:"变更余额",before:"变更前余额",after:"变更后余额",memo:"备注",type:"日志类型",content:"相关内容",create_time:"创建时间","quick Search Fields":"ID"};export{e as default};

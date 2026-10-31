@@ -1,0 +1,1 @@
+const e={id:"ID",user_id:"用户ID",user__username:"用户名",name:"实名名字",type:"实名类型:personal=个人",id_no:"身份证号码",business_id:"实名业务ID",remark:"备注",status:"状态","status 0":"未通过","status 1":"已认证","status 2":"已提交",create_time:"创建时间",update_time:"修改时间","quick Search Fields":"ID"};export{e as default};

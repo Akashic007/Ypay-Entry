@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微信支付</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .payment-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #07C160;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .payment-status {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .payment-actions {
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            margin: 0 10px;
+        }
+
+        .btn-primary {
+            background: #07C160;
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #05a151;
+        }
+
+        .btn-default {
+            background: white;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-default:hover {
+            background: #f5f5f5;
+        }
+
+        .error-message {
+            color: #ff4d4f;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="payment-container">
+    <div class="loading-spinner"></div>
+    <div class="payment-status">正在调起微信支付...</div>
+
+    <div class="payment-actions" style="display: none;">
+        <button id="retry-btn" class="btn btn-primary">重新支付</button>
+<!--        <a href="/" class="btn btn-default">返回首页</a>-->
+    </div>
+
+    <div id="error-message" class="error-message" style="display: none;"></div>
+</div>
+
+<script>
+    // 从PHP模板获取支付参数
+    const payParams = {
+        appId: '{$appId}',
+        timeStamp: '{$timeStamp}',
+        nonceStr: '{$nonceStr}',
+        package: '{$package}',
+        signType: '{$signType}',
+        paySign: '{$paySign}'
+    };
+
+    // 调起微信支付
+    function invokeWechatPay() {
+        if (typeof WeixinJSBridge === "undefined") {
+            // 监听微信JSBridge加载事件
+            if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+            } else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+            }
+
+            // 5秒后检查是否仍未加载
+            setTimeout(() => {
+                if (typeof WeixinJSBridge === "undefined") {
+                    showError("微信支付环境初始化失败，请稍后再试");
+                }
+            }, 5000);
+        } else {
+            onBridgeReady();
+        }
+    }
+
+    // 实际调起支付
+    function onBridgeReady() {
+        document.querySelector('.payment-status').textContent = '请在新打开的支付页面完成支付';
+
+        WeixinJSBridge.invoke('getBrandWCPayRequest', payParams, function(res) {
+            if (res.err_msg === "get_brand_wcpay_request:ok") {
+                // 支付成功，跳转到成功页面
+                window.location.href = '/payment/success';
+            } else if (res.err_msg === "get_brand_wcpay_request:cancel") {
+                // 用户取消支付
+                showError("您已取消支付");
+            } else {
+                // 支付失败
+                showError("支付失败: " + res.err_msg);
+            }
+        });
+    }
+
+    // 显示错误信息
+    function showError(message) {
+        document.querySelector('.loading-spinner').style.display = 'none';
+        document.querySelector('.payment-status').textContent = '支付遇到问题';
+        document.getElementById('error-message').textContent = message;
+        document.getElementById('error-message').style.display = 'block';
+        document.querySelector('.payment-actions').style.display = 'block';
+    }
+
+    // 重试按钮点击事件
+    document.getElementById('retry-btn').addEventListener('click', function() {
+        document.querySelector('.loading-spinner').style.display = 'block';
+        document.querySelector('.payment-status').textContent = '正在调起微信支付...';
+        document.getElementById('error-message').style.display = 'none';
+        document.querySelector('.payment-actions').style.display = 'none';
+
+        invokeWechatPay();
+    });
+
+    // 页面加载后立即调起支付
+    window.onload = function() {
+        invokeWechatPay();
+    };
+</script>
+</body>
+</html>

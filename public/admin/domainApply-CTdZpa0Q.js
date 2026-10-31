@@ -1,0 +1,1 @@
+const e={id:"ID",user_id:"用户ID",user__username:"用户名",site_id:"分站ID",site__name:"分站名称",domain:"申请域名",status:"状态",reason:"审核说明",remark:"用户备注",create_time:"创建时间",update_time:"修改时间","quick Search Fields":"ID/域名"};export{e as default};

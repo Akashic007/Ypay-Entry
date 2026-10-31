@@ -1,0 +1,384 @@
+<!doctype html>
+
+<html
+	lang="en"
+	class="light-style layout-navbar-fixed"
+	dir="ltr"
+	data-theme="theme-default"
+	data-assets-path="/static/index/user/assets/"
+	data-template="front-pages"
+>
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+		/>
+
+		<title>{$site_name}-{$site_title}</title>
+
+		<meta name="keywords" content="{$site_keyword}" />
+		<meta name="description" content="{$site_description}" />
+
+		<!-- Favicon -->
+		<link rel="icon" type="image/x-icon" href="{$site_ico}" />
+
+		<link
+			rel="stylesheet"
+			href="/views/home-template/default/fonts/boxicons.css"
+		/>
+
+		<!-- Core CSS -->
+		<link
+			rel="stylesheet"
+			href="/views/home-template/default/css/core.css"
+			class="template-customizer-core-css"
+		/>
+		<link
+			rel="stylesheet"
+			href="/views/home-template/default/css/theme-default.css"
+			class="template-customizer-theme-css"
+		/>
+		<link
+			rel="stylesheet"
+			href="/views/home-template/default/css/front-page.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="/views/home-template/default/css/index.css"
+		/>
+		<!-- Vendors CSS -->
+
+		<link
+			rel="stylesheet"
+			href="/views/home-template/default/css/nouislider/nouislider.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="/views/home-template/default/css/swiper/swiper.css"
+		/>
+
+		<!-- Page CSS -->
+		<link
+			rel="stylesheet"
+			href="/views/home-template/default/css/front-page-landing.css"
+		/>
+
+		<!-- Helpers -->
+		<script src="/views/home-template/default/js/helpers.js"></script>
+		<!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+		<!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+		<script src="/views/home-template/default/js/front-config.js"></script>
+	</head>
+
+	<body>
+		<script src="/views/home-template/default/js/dropdown-hover.js"></script>
+		<script src="/views/home-template/default/js/mega-dropdown.js"></script>
+
+		<!-- Navbar: Start -->
+		<nav class="layout-navbar shadow-none py-0">
+			<div class="container">
+				<div
+					class="navbar navbar-expand-lg landing-navbar px-3 px-md-4"
+				>
+					<!-- Menu logo wrapper: Start -->
+					<div class="navbar-brand app-brand demo d-flex py-0 me-4">
+						<!-- Mobile menu toggle: Start-->
+						<button
+							class="navbar-toggler border-0 px-0 me-2"
+							type="button"
+							data-bs-toggle="collapse"
+							data-bs-target="#navbarSupportedContent"
+							aria-controls="navbarSupportedContent"
+							aria-expanded="false"
+							aria-label="Toggle navigation"
+						>
+							<i
+								class="tf-icons bx bx-menu bx-sm align-middle"
+							></i>
+						</button>
+						<!-- Mobile menu toggle: End-->
+						<a href="/" class="app-brand-link">
+							<span
+								class="app-brand-text menu-text fw-bold ms-2 ps-1"
+								style="
+									font-size: 1.75rem;
+									letter-spacing: -0.5px;
+								"
+								>{$site_name}</span
+							>
+						</a>
+					</div>
+					<!-- Menu logo wrapper: End -->
+					<!-- Menu wrapper: Start -->
+					<div
+						class="collapse navbar-collapse landing-nav-menu"
+						id="navbarSupportedContent"
+					>
+						<button
+							class="navbar-toggler border-0 text-heading position-absolute end-0 top-0 scaleX-n1-rtl"
+							type="button"
+							data-bs-toggle="collapse"
+							data-bs-target="#navbarSupportedContent"
+							aria-controls="navbarSupportedContent"
+							aria-expanded="false"
+							aria-label="Toggle navigation"
+						>
+							<i class="tf-icons bx bx-x bx-sm"></i>
+						</button>
+						<ul class="navbar-nav me-auto">
+							{foreach $home_menu as $key=>$val }
+							<li class="nav-item">
+								<a
+									class="nav-link fw-medium"
+									aria-current="page"
+									href="{$val.value}"
+									>{$val.key}</a
+								>
+							</li>
+							{/foreach}
+						</ul>
+					</div>
+					<div class="landing-menu-overlay d-lg-none"></div>
+					<!-- Menu wrapper: End -->
+					<!-- Toolbar: Start -->
+					<ul class="navbar-nav flex-row align-items-center ms-auto">
+						<!-- Style Switcher -->
+						<li
+							class="nav-item dropdown-style-switcher dropdown me-2 me-xl-0"
+						>
+							<a
+								class="nav-link dropdown-toggle hide-arrow"
+								href="javascript:void(0);"
+								data-bs-toggle="dropdown"
+							>
+								<i class="bx bx-sm"></i>
+							</a>
+							<ul
+								class="dropdown-menu dropdown-menu-end dropdown-styles"
+							>
+								<li>
+									<a
+										class="dropdown-item"
+										href="javascript:void(0);"
+										data-theme="light"
+									>
+										<span class="align-middle"
+											><i class="bx bx-sun me-2"></i>白
+											天</span
+										>
+									</a>
+								</li>
+								<li>
+									<a
+										class="dropdown-item"
+										href="javascript:void(0);"
+										data-theme="dark"
+									>
+										<span class="align-middle"
+											><i class="bx bx-moon me-2"></i>黑
+											夜</span
+										>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<!-- / Style Switcher-->
+
+						<!-- navbar button: Start -->
+						<li id="authContainer"></li>
+						<script>
+							// 检查localStorage中是否存在token
+							const token = localStorage.getItem("accessToken");
+							const authContainer =
+								document.getElementById("authContainer");
+
+							if (token) {
+								// 如果有token，显示已登录状态
+								authContainer.innerHTML = `
+                            <!-- 用户操作区 -->
+                            <a href="/dashboard/analytics" class="btn btn-primary"><span
+                class="tf-icons bx bx-user me-md-1"></span><span class="d-none d-md-block">用户中心</span></a>
+                        `;
+							} else {
+								// 如果没有token，显示登录注册按钮
+								authContainer.innerHTML = `
+                                <a href="/login" class="btn btn-primary"><span class="tf-icons bx bx-user me-md-1"></span><span
+                class="d-none d-md-block">登录 / 注册</span></a>
+                        `;
+							}
+						</script>
+						<!-- navbar button: End -->
+					</ul>
+					<!-- Toolbar: End -->
+				</div>
+			</div>
+		</nav>
+		<!-- Navbar: End -->
+
+		<!-- Sections:Start -->
+
+		<div data-bs-spy="scroll" class="scrollspy-example">
+			<!-- Hero: Start -->
+			<section id="hero-animation">
+				<div
+					id="landingHero"
+					class="section-py landing-hero position-relative"
+				>
+					<div class="container">
+						<div class="hero-text-box text-center">
+							<h1
+								class="text-primary hero-title display-4 fw-bold"
+							>
+								{$site_name}-{$site_title}
+							</h1>
+							<h2 class="hero-sub-title h6 mb-4 pb-1">
+								{$site_description}
+							</h2>
+							<div
+								class="landing-hero-btn d-inline-block position-relative"
+							>
+								<span
+									class="hero-btn-item position-absolute d-none d-md-flex text-heading"
+									>加 入 平 台
+									<img
+										src="/views/home-template/default/images/icons/Join-community-arrow.png"
+										alt="Join community arrow"
+										class="scaleX-n1-rtl"
+								/></span>
+								<a href="/login" class="btn btn-primary"
+									>点 击 前 往 加 入</a
+								>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--<div class="landing-hero-blank"></div>-->
+			</section>
+			<!-- Hero: End -->
+
+			<!-- Useful features: Start -->
+			<section id="landingFeatures" class="section-py landing-features">
+				<div class="container">
+					<div class="text-center mb-3 pb-1">
+						<span class="badge bg-label-primary">平 台 介 绍</span>
+					</div>
+					<h3 class="text-center mb-1">无需营业执照个人可申请</h3>
+					<p class="text-center mb-3 mb-md-5 pb-3">
+						专业客服服务，7*24小时技术支持,不做二清,不碰钱,微信支付宝收款码可直接收款.
+					</p>
+					<div class="features-icon-wrapper row gx-0 gy-4 g-sm-5">
+						<div
+							class="col-lg-4 col-sm-6 text-center features-icon-box"
+						>
+							<div class="text-center mb-3">
+								<img
+									src="/views/home-template/default/images/icons/laptop.png"
+									alt="laptop charging"
+								/>
+							</div>
+							<h5 class="mb-3">接口安全</h5>
+							<p class="features-icon-description">
+								采用国内服务器，接口稳定传输，给顾客快速流畅的体验，安全可靠的服务您的每一笔订单.
+							</p>
+						</div>
+						<div
+							class="col-lg-4 col-sm-6 text-center features-icon-box"
+						>
+							<div class="text-center mb-3">
+								<img
+									src="/views/home-template/default/images/icons/rocket.png"
+									alt="transition up"
+								/>
+							</div>
+							<h5 class="mb-3">费率超低</h5>
+							<p class="features-icon-description">
+								接口渠道直接到自己账户，省去中间商赚差价，因此我们可以给商户提供更低廉的费率.
+							</p>
+						</div>
+						<div
+							class="col-lg-4 col-sm-6 text-center features-icon-box"
+						>
+							<div class="text-center mb-3">
+								<img
+									src="/views/home-template/default/images/icons/paper.png"
+									alt="edit"
+								/>
+							</div>
+							<h5 class="mb-3">资金保障</h5>
+							<p class="features-icon-description">
+								商户订单信息，全部加密处理，专业技术24小时实时运维，您的帐户安全将得到充分的保障.
+							</p>
+						</div>
+						<div
+							class="col-lg-4 col-sm-6 text-center features-icon-box"
+						>
+							<div class="text-center mb-3">
+								<img
+									src="/views/home-template/default/images/icons/check.png"
+									alt="3d select solid"
+								/>
+							</div>
+							<h5 class="mb-3">REST API</h5>
+							<p class="features-icon-description">
+								提供了完善的API接口，你可以用于平台应用通道接入，开发各种系统的对接通道插件等.
+							</p>
+						</div>
+						<div
+							class="col-lg-4 col-sm-6 text-center features-icon-box"
+						>
+							<div class="text-center mb-3">
+								<img
+									src="/views/home-template/default/images/icons/user.png"
+									alt="lifebelt"
+								/>
+							</div>
+							<h5 class="mb-3">专属客服</h5>
+							<p class="features-icon-description">
+								专业客服团队，专属客服一对一贴心服务，7*24小时全天候在线为你解答.
+							</p>
+						</div>
+						<div
+							class="col-lg-4 col-sm-6 text-center features-icon-box"
+						>
+							<div class="text-center mb-3">
+								<img
+									src="/views/home-template/default/images/icons/keyboard.png"
+									alt="google docs"
+								/>
+							</div>
+							<h5 class="mb-3">拒资金流</h5>
+							<p class="features-icon-description">
+								只负责交易处理不参与资金清算，资金全都实时到您的个人账户上，以此来保障您的资金安全.
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<!-- / Sections:End -->
+
+		<!-- Footer: Start -->
+		<footer class="landing-footer bg-body footer-text">
+			<div class="footer-bottom py-3">
+				<div
+					class="container d-flex flex-wrap justify-content-between flex-md-row flex-column text-center text-md-start"
+				>
+					{$footer_content|raw}
+				</div>
+			</div>
+		</footer>
+
+		<!-- Core JS -->
+		<!-- build:js assets/vendor/js/core.js -->
+		<script src="/views/home-template/default/js/popper/popper.js"></script>
+		<script src="/views/home-template/default/js/bootstrap.js"></script>
+
+		<!-- endbuild -->
+
+		<!-- Vendors JS -->
+		<script src="/views/home-template/default/js/nouislider/nouislider.js"></script>
+		<script src="/views/home-template/default/js/swiper/swiper.js"></script>
+	</body>
+</html>
